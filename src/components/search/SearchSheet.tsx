@@ -2,7 +2,7 @@
 
 import { Search } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { NavData } from "@/components/layout/nav";
 import { cn } from "@/lib/cn";
 
@@ -44,12 +44,6 @@ export function SearchSheet({
   const close = useCallback(() => {
     setOpen(false);
     trigger.current?.focus({ preventScroll: true });
-  }, []);
-
-  // Warm the chunk once the page has settled, so even a first tap opens instantly.
-  useEffect(() => {
-    const t = window.setTimeout(() => void import("./SearchSheetPanel"), 4000);
-    return () => window.clearTimeout(t);
   }, []);
 
   return (

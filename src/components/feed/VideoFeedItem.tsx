@@ -82,7 +82,9 @@ export const VideoFeedItem = memo(function VideoFeedItem({
 
   return (
     <article
-      className="relative h-full w-full snap-start snap-always overflow-hidden bg-night"
+      // `content-visibility: auto`: off-screen stories skip layout and paint (19 full-screen
+      // items made the first layout a long task). Height is explicit, so snap points don't move.
+      className="relative h-full w-full snap-start snap-always overflow-hidden bg-night [content-visibility:auto] [contain-intrinsic-height:auto_100dvh] [contain-intrinsic-width:auto_1px]"
       aria-roledescription="story"
       aria-labelledby={headingId}
       aria-setsize={total}

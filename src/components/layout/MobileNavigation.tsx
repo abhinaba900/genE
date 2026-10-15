@@ -2,7 +2,7 @@
 
 import { Menu } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import type { NavData } from "./nav";
 
@@ -26,12 +26,6 @@ export function MobileNavigation({
   const close = useCallback(() => {
     setOpen(false);
     trigger.current?.focus({ preventScroll: true });
-  }, []);
-
-  // Warm the chunk once the page has settled, so even a first tap opens instantly.
-  useEffect(() => {
-    const t = window.setTimeout(() => void import("./MobileDrawer"), 4000);
-    return () => window.clearTimeout(t);
   }, []);
 
   return (

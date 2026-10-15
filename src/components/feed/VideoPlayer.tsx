@@ -104,28 +104,42 @@ export const VideoPlayer = memo(function VideoPlayer({
     };
   }, [active, paused, progressRef]);
 
-  // Progress bar — written directly to the DOM on animation frames.
+  // Progress bar — a compositor-run animation (Web Animations API) kept in step with the video,
+  // so playback causes no per-frame main-thread work. It's re-synced only on play, pause, seek,
+  // rate changes and loop restarts.
   useEffect(() => {
     const video = ref.current;
     const bar = progressRef?.current;
     if (!video || !bar || !active) return;
-    let raf = 0;
-    const tick = () => {
-      if (video.duration) bar.style.transform = `scaleX(${video.currentTime / video.duration})`;
-      raf = requestAnimationFrame(tick);
+    let anim: Animation | null = null;
+    let last = 0;
+    const sync = () => {
+      if (!video.duration || !Number.isFinite(video.duration)) return;
+      if (!anim) {
+        anim = bar.animate([{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }], {
+          duration: video.duration * 1000,
+          easing: "linear",
+          fill: "forwards",
+        });
+      }
+      anim.playbackRate = video.playbackRate;
+      anim.currentTime = video.currentTime * 1000;
+      if (video.paused) anim.pause();
+      else anim.play();
     };
-    const start = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(tick);
+    // `loop` restarts silently; catch the wrap-around.
+    const onTime = () => {
+      if (video.currentTime < last) sync();
+      last = video.currentTime;
     };
-    const stop = () => cancelAnimationFrame(raf);
-    video.addEventListener("playing", start);
-    video.addEventListener("pause", stop);
-    if (!video.paused) start();
+    const events = ["playing", "pause", "seeked", "ratechange", "loadedmetadata"] as const;
+    events.forEach((e) => video.addEventListener(e, sync));
+    video.addEventListener("timeupdate", onTime);
+    sync();
     return () => {
-      stop();
-      video.removeEventListener("playing", start);
-      video.removeEventListener("pause", stop);
+      events.forEach((e) => video.removeEventListener(e, sync));
+      video.removeEventListener("timeupdate", onTime);
+      anim?.cancel();
     };
   }, [active, progressRef]);
 

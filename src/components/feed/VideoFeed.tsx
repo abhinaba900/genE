@@ -163,6 +163,7 @@ export function VideoFeed({ stories, nav, activeCategory, variant = "mobile" }: 
   // ── Horizontal swipe / drag: neighbouring category ──
   const router = useRouter();
   const frame = useRef<HTMLDivElement>(null);
+  const surface = useRef<HTMLDivElement>(null);
   const reel = useRef<HTMLDivElement>(null);
   const basePath = variant === "standalone" ? "/watch" : "";
   const categories = nav.categories;
@@ -188,6 +189,7 @@ export function VideoFeed({ stories, nav, activeCategory, variant = "mobile" }: 
   }, [enabled, router, prevHref, nextHref]);
   const swipeProgress = useCategorySwipe({
     frameRef: frame,
+    surfaceRef: surface,
     contentRef: reel,
     enabled,
     hasPrev: !!prevCategory,
@@ -296,8 +298,12 @@ export function VideoFeed({ stories, nav, activeCategory, variant = "mobile" }: 
     <div
       // The reel has its own snap/wheel handling; keep page smooth-scrolling out of it.
       data-lenis-prevent
+      ref={surface}
       className={cn(
-        "fixed inset-0 z-30 overflow-hidden bg-night text-white",
+        // pan-y everywhere (incl. the top bar and the area beside the /watch frame): the browser
+        // only ever scrolls vertically, so horizontal swipes always reach the category gesture.
+        // The tab strip is its own horizontal scroller, so it keeps sideways scrolling.
+        "fixed inset-0 z-30 touch-pan-y overflow-hidden bg-night text-white",
         standalone && "md:flex md:items-stretch md:justify-center",
       )}
     >

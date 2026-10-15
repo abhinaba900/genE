@@ -18,6 +18,16 @@ type Params = { slug: string };
 
 export const revalidate = 60;
 
+/**
+ * Pre-render every category (revalidated like the rest of the site). Swiping between
+ * categories prefetches the neighbours; static pages make that prefetch complete, so the
+ * next reel is already on the device when the swipe ends — no server round trip.
+ * Categories added later still render on first request (`dynamicParams` stays on).
+ */
+export async function generateStaticParams() {
+  return (await getCategories()).map((c) => ({ slug: c.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
   const category = await getCategory(slug);

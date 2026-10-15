@@ -16,6 +16,7 @@ type Direction = -1 | 1; // -1 → previous category, 1 → next category
  */
 export function useCategorySwipe({
   frameRef,
+  surfaceRef,
   contentRef,
   enabled,
   hasPrev,
@@ -24,6 +25,9 @@ export function useCategorySwipe({
   onCommit,
 }: {
   frameRef: React.RefObject<HTMLElement | null>;
+  /** Element that receives the gesture (defaults to the frame). On the framed /watch column
+   *  this is the whole screen, so a swipe beside the 9:16 frame still works on tablets. */
+  surfaceRef?: React.RefObject<HTMLElement | null>;
   contentRef: React.RefObject<HTMLElement | null>;
   enabled: boolean;
   hasPrev: boolean;
@@ -38,7 +42,8 @@ export function useCategorySwipe({
 
   useEffect(() => {
     const frame = frameRef.current;
-    if (!frame || !enabled) return;
+    const surface = surfaceRef?.current ?? frame;
+    if (!frame || !surface || !enabled) return;
 
     const setX = (x: number, animate: boolean, opacity = 1) => {
       const el = contentRef.current;
@@ -90,7 +95,7 @@ export function useCategorySwipe({
           return;
         }
         try {
-          frame.setPointerCapture(e.pointerId);
+          surface.setPointerCapture(e.pointerId);
         } catch {
           // Pointer already released — the drag still works without capture.
         }
@@ -148,26 +153,26 @@ export function useCategorySwipe({
       if ((dir === 1 && hasNext) || (dir === -1 && hasPrev)) commit(dir);
     };
 
-    frame.addEventListener("pointerdown", onDown);
-    frame.addEventListener("pointermove", onMove);
-    frame.addEventListener("pointerup", onUp);
-    frame.addEventListener("pointercancel", onCancel);
+    surface.addEventListener("pointerdown", onDown);
+    surface.addEventListener("pointermove", onMove);
+    surface.addEventListener("pointerup", onUp);
+    surface.addEventListener("pointercancel", onCancel);
     // Native image/link dragging would swallow the mouse gesture.
     const onDragStart = (e: DragEvent) => e.preventDefault();
 
-    frame.addEventListener("click", onClick, true);
-    frame.addEventListener("wheel", onWheel, { passive: false });
-    frame.addEventListener("dragstart", onDragStart);
+    surface.addEventListener("click", onClick, true);
+    surface.addEventListener("wheel", onWheel, { passive: false });
+    surface.addEventListener("dragstart", onDragStart);
     return () => {
-      frame.removeEventListener("dragstart", onDragStart);
-      frame.removeEventListener("pointerdown", onDown);
-      frame.removeEventListener("pointermove", onMove);
-      frame.removeEventListener("pointerup", onUp);
-      frame.removeEventListener("pointercancel", onCancel);
-      frame.removeEventListener("click", onClick, true);
-      frame.removeEventListener("wheel", onWheel);
+      surface.removeEventListener("dragstart", onDragStart);
+      surface.removeEventListener("pointerdown", onDown);
+      surface.removeEventListener("pointermove", onMove);
+      surface.removeEventListener("pointerup", onUp);
+      surface.removeEventListener("pointercancel", onCancel);
+      surface.removeEventListener("click", onClick, true);
+      surface.removeEventListener("wheel", onWheel);
     };
-  }, [frameRef, contentRef, enabled, hasPrev, hasNext, reducedMotion]);
+  }, [frameRef, surfaceRef, contentRef, enabled, hasPrev, hasNext, reducedMotion]);
 
   return progress;
 }

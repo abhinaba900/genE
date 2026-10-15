@@ -92,10 +92,7 @@ body {
 .gene-wordmark em { font-style: italic; font-weight: 400; margin-left: 0.12em; }
 .gene-wordmark__dot { width: 0.2em; height: 0.2em; border-radius: 999px; background: var(--gene-accent); margin-left: 0.08em; display: inline-block; }
 .gene-wordmark--icon { font-size: 18px; white-space: nowrap; }
-.gene-login-logo { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.gene-login-logo__img { width: 220px; height: auto; display: block; }
 .gene-nav-icon { width: 28px; height: 28px; display: block; }
-.gene-login-logo__label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gene-muted); }
 .gene-accent-text { color: var(--gene-primary); }
 
 /* ── Top bar (Payload app header) ── */
@@ -1143,3 +1140,241 @@ a.gene-cell-story:hover .gene-cell-story__title, button.gene-cell-story:hover .g
 @keyframes gene-tour-rise { from { opacity: 0; transform: translateY(6px); } }
 @media (max-width: 640px) { .gene-tour__features { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .gene-tour__spotlight, .gene-tour__card, .gene-tour__backdrop { transition: none; animation: none; } }
+
+/* ══ Login (and the other minimal auth screens) ═════════════════════════════
+ * Split screen on wide viewports: an editorial poster panel on the left, the form on
+ * the right. `LoginLogo` (cms/admin/brand.tsx) supplies the panel and heading; with
+ * `display: contents` they join the form as items of one grid.
+ */
+.gene-login { display: contents; }
+.gene-login__panel { display: none; }
+.gene-login__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.gene-login__logo { width: 168px; height: auto; display: block; }
+.gene-login__badge {
+  margin-top: 12px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--gene-primary-soft);
+  color: var(--gene-primary-ink);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.gene-login__title {
+  margin: 26px 0 0;
+  font-family: var(--gene-serif, Georgia, serif);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--gene-ink);
+}
+.gene-login__lede { margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: var(--gene-muted); }
+/* Forgot / reset / first-user screens reuse the logo; the welcome copy is login-only. */
+.template-minimal:not(.login) .gene-login__title,
+.template-minimal:not(.login) .gene-login__lede { display: none; }
+
+.login.template-minimal {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 0;
+  background: var(--gene-paper);
+  align-items: stretch;
+}
+.login .template-minimal__wrap {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 1fr auto auto 1.2fr;
+  justify-items: center;
+  row-gap: 28px;
+}
+.login .login__brand { display: contents; }
+.login .gene-login__head { grid-row: 2; width: min(400px, 100%); }
+.login .login__form {
+  grid-row: 3;
+  width: min(400px, 100%);
+  margin: 0;
+  padding: 28px;
+  border-radius: 20px;
+  background: var(--gene-surface);
+  border: 1px solid var(--gene-line);
+  box-shadow: var(--gene-shadow-lg);
+  display: flex;
+  flex-direction: column;
+}
+.login .login__form__inputWrap { display: flex; flex-direction: column; gap: 18px; }
+
+/* Fields */
+.login .field-type { margin: 0; }
+.login .field-label {
+  margin-bottom: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gene-ink-2);
+}
+.login .field-label .required { color: var(--gene-accent-ink); margin-left: 2px; }
+.login .field-type__wrap { display: flex; flex-direction: column; }
+.login .field-type input {
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid;
+  border-color: var(--theme-elevation-200) !important; /* the admin-wide input rule uses !important */
+  background: var(--gene-surface);
+  font-size: 15px;
+  color: var(--gene-ink);
+  box-shadow: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.login .field-type input:hover { border-color: var(--theme-elevation-300) !important; }
+.login .field-type input:focus,
+.login .field-type input:focus-visible {
+  outline: none;
+  border-color: var(--gene-primary) !important;
+  box-shadow: var(--gene-ring) !important;
+}
+/* Errors: an inline message under the field instead of a floating tooltip. */
+.login .field-type.error input {
+  border-color: var(--tone-red-fg) !important;
+  background: #fffafa;
+}
+.login .field-type.error input:focus { box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.16) !important; }
+/* Payload hides field tooltips on narrow screens; as inline text they're always shown. */
+.login .field-error.tooltip {
+  display: block;
+  order: 2;
+  position: static;
+  transform: none;
+  inset: auto;
+  margin: 7px 0 0;
+  padding: 0;
+  max-width: none;
+  width: auto;
+  background: none;
+  box-shadow: none;
+  color: var(--tone-red-fg);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: left;
+  opacity: 1;
+  visibility: visible;
+}
+.login .field-error.tooltip::after,
+.login .field-error.tooltip::before { display: none; }
+.login .field-error .tooltip-content { padding: 0; }
+
+/* Forgot link + submit */
+.login .login__form > a {
+  align-self: flex-end;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gene-primary-ink);
+  text-decoration: none;
+}
+.login .login__form > a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.login .form-submit { margin: 20px 0 0; }
+.login .form-submit .btn {
+  width: 100%;
+  height: 48px;
+  margin: 0;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--gene-primary);
+  border-color: var(--gene-primary);
+  box-shadow: 0 6px 16px -6px rgba(47, 111, 222, 0.55);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+.login .form-submit .btn:hover { background: var(--gene-primary-ink); border-color: var(--gene-primary-ink); }
+.login .form-submit .btn:active { transform: translateY(1px); }
+.login .form-submit .btn:focus-visible { outline: none; box-shadow: var(--gene-ring); }
+
+/* Wide screens: poster panel on the left. */
+@media (min-width: 960px) {
+  .login .template-minimal__wrap {
+    padding: 0 0 0 0;
+    grid-template-columns: minmax(0, 1.1fr) minmax(460px, 1fr);
+  }
+  .login .gene-login__panel { display: block; grid-column: 1; grid-row: 1 / -1; }
+  .login .gene-login__head,
+  .login .login__form { grid-column: 2; }
+}
+
+.gene-login__panel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100%;
+  background: #0b1530;
+  isolation: isolate;
+}
+.gene-login__posters {
+  position: absolute;
+  inset: -18% -16% -18% -16%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-content: center;
+  gap: 14px;
+  transform: rotate(-8deg);
+  z-index: -2;
+}
+.gene-login__posters img {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+}
+.gene-login__posters img:nth-child(even) { transform: translateY(-22%); }
+.gene-login__panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(11, 21, 48, 0.2) 0%, rgba(11, 21, 48, 0.55) 45%, rgba(11, 21, 48, 0.94) 100%),
+    linear-gradient(90deg, rgba(31, 86, 184, 0.35), rgba(95, 158, 47, 0.12));
+}
+.gene-login__panel-copy {
+  position: absolute;
+  left: clamp(32px, 5vw, 64px);
+  right: clamp(32px, 5vw, 64px);
+  bottom: clamp(36px, 6vw, 64px);
+  color: #fff;
+}
+.gene-login__mark { width: 44px; height: 44px; display: block; border-radius: 12px; background: #fff; padding: 6px; box-sizing: border-box; }
+.gene-login__tagline {
+  margin: 22px 0 0;
+  max-width: 15ch;
+  font-family: var(--gene-serif, Georgia, serif);
+  font-size: clamp(36px, 3.4vw, 54px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+.gene-login__tagline em { font-style: italic; color: #cfe3ff; }
+.gene-login__panel-note { margin: 16px 0 0; max-width: 40ch; font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, 0.8); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .login .gene-login__head,
+  .login .login__form { animation: gene-login-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .login .login__form { animation-delay: 0.08s; }
+}
+@keyframes gene-login-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}

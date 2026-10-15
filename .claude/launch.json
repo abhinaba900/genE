@@ -2,6 +2,13 @@
   "version": "0.0.1",
   "configurations": [
     { "name": "gen-e", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev"], "port": 3000 },
-    { "name": "gen-e-prod", "runtimeExecutable": "npx", "runtimeArgs": ["next", "start", "-p", "3010"], "port": 3010 }
+    { "name": "gen-e-prod", "runtimeExecutable": "npx", "runtimeArgs": ["next", "start", "-p", "3010"], "port": 3010 },
+    {
+      "name": "gen-e-prod-localdb",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["next", "start", "-p", "3011"],
+      "port": 3011,
+      "env": { "DATABASE_URL": "postgres://postgres@127.0.0.1:5433/gen_e" }
+    }
   ]
 }
