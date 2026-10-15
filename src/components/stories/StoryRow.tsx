@@ -21,14 +21,14 @@ export function StoryRow({
   href?: string;
 }) {
   return (
-    <article data-hover-card className="group relative grid grid-cols-[96px_minmax(0,1fr)] gap-5 border-b border-line py-7 sm:grid-cols-[132px_minmax(0,1fr)] md:gap-8">
+    <article data-hover-card className="group relative grid grid-cols-[96px_minmax(0,1fr)] gap-5 border-b border-line py-7 transition-transform duration-200 ease-out-soft active:scale-[0.99] sm:grid-cols-[132px_minmax(0,1fr)] md:gap-8">
       <div className="relative aspect-[9/16] overflow-hidden rounded-xl bg-ink">
         <Image
           src={story.video.poster}
           alt=""
           fill
           sizes="(min-width: 640px) 132px, 96px"
-          className="object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.05]"
+          className="object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.05] group-focus-within:scale-[1.05]"
         />
         <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-black/45 px-2 py-0.5 text-[10px] font-medium text-white">
           <Play className="size-2 fill-current" aria-hidden />
@@ -46,7 +46,7 @@ export function StoryRow({
           </time>
         </p>
         <Heading className="mt-3 font-serif text-[22px] leading-[1.14] tracking-[-0.015em] text-ink sm:text-[28px] [text-wrap:balance]">
-          <Link href={href ?? storyPath(story.slug)} className="after:absolute after:inset-0 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-[6px]">
+          <Link href={href ?? storyPath(story.slug)} className="after:absolute after:inset-0 decoration-1 underline-offset-[6px] group-hover:underline group-focus-within:underline">
             <Highlight text={story.title} query={highlight} />
           </Link>
         </Heading>

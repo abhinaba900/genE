@@ -36,8 +36,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     <>
       <SiteHeader />
       <main id="main" className="mx-auto min-h-[60vh] max-w-[960px] px-5 pt-10 md:px-8 md:pt-16">
-        <h1 className="kicker text-muted">Search gen.E</h1>
-        <div className="mt-4">
+        <h1 className="enter kicker text-muted">Search gen.E</h1>
+        <div className="enter mt-4 [--step:1]">
           <SearchInterface key={query} initialQuery={query} initialResults={results} suggestions={suggestions} />
         </div>
       </main>

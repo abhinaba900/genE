@@ -15,8 +15,8 @@ export function ArticleHeader({ story }: { story: Story }) {
 
   return (
     <header className="mx-auto grid max-w-[1680px] items-center gap-10 px-5 pt-8 md:px-8 md:pt-14 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_400px] xl:gap-20 xl:px-12">
-      <div className="animate-rise">
-        <p className="kicker flex flex-wrap items-center gap-2.5 text-ink/60">
+      <div>
+        <p className="enter kicker flex flex-wrap items-center gap-2.5 text-ink/60">
           <span aria-hidden className="size-1.5 rounded-full bg-accent" />
           <Link href={categoryPath(story.category.slug)} className="hover:text-ink">
             {story.category.name}
@@ -27,14 +27,14 @@ export function ArticleHeader({ story }: { story: Story }) {
             </span>
           )}
         </p>
-        <h1 id="article-title" className="mt-5 font-serif text-[clamp(2.4rem,1.5rem+4vw,4.6rem)] font-normal leading-[1.02] tracking-[-0.025em] text-ink [text-wrap:balance]">
+        <h1 id="article-title" className="enter mt-5 font-serif text-[clamp(2.4rem,1.5rem+4vw,4.6rem)] font-normal leading-[1.02] tracking-[-0.025em] text-ink [text-wrap:balance] [--step:1]">
           {story.title}
         </h1>
-        <p className="mt-6 max-w-[56ch] font-serif text-[21px] leading-[1.45] text-ink/70 md:text-[23px]">
+        <p className="enter mt-6 max-w-[56ch] font-serif text-[21px] leading-[1.45] text-ink/70 md:text-[23px] [--step:2]">
           {story.excerpt}
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-5 border-y border-line py-5">
+        <div className="enter mt-8 flex flex-wrap items-center justify-between gap-5 border-y border-line py-5 [--step:3]">
           <div className="flex items-center gap-3">
             <span
               aria-hidden
@@ -56,7 +56,8 @@ export function ArticleHeader({ story }: { story: Story }) {
         </div>
       </div>
 
-      <div className="-mx-5 animate-fade-in sm:mx-auto sm:w-[400px] lg:w-full">
+      {/* Film wipes up on first paint (no settle scale: it may already be playing). */}
+      <div className="enter-media -mx-5 [--step:1] sm:mx-auto sm:w-[400px] sm:[--wipe-radius:22px] lg:w-full">
         <ArticleMedia
           video={story.video}
           title={story.title}

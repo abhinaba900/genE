@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 import type { ArticleBlock, RichText } from "@/lib/content/types";
+import { Reveal } from "@/components/motion/Reveal";
 import { ArticleMedia } from "./ArticleMedia";
 
 /** Inline rich text as React elements — formatting and links only; there is no raw-HTML path. */
@@ -69,7 +70,8 @@ export function ArticleBody({ blocks, title }: { blocks: ArticleBlock[]; title: 
             const portrait = block.image.height > block.image.width;
             const wide = block.layout === "wide" && !portrait;
             return (
-              <figure
+              <Reveal
+                as="figure"
                 key={i}
                 className={cn(
                   "my-12",
@@ -96,12 +98,12 @@ export function ArticleBody({ blocks, title }: { blocks: ArticleBlock[]; title: 
                     )}
                   </figcaption>
                 )}
-              </figure>
+              </Reveal>
             );
           }
           case "quote":
             return (
-              <figure key={i} className="mx-auto my-14 max-w-[760px] border-l-2 border-accent pl-6 md:pl-10">
+              <Reveal as="figure" key={i} className="mx-auto my-14 max-w-[760px] border-l-2 border-accent pl-6 md:pl-10">
                 <blockquote className="font-serif text-[28px] italic leading-[1.22] tracking-[-0.01em] text-ink md:text-[36px]">
                   <p>“{block.text}”</p>
                 </blockquote>
@@ -110,7 +112,7 @@ export function ArticleBody({ blocks, title }: { blocks: ArticleBlock[]; title: 
                     — {block.attribution}
                   </figcaption>
                 )}
-              </figure>
+              </Reveal>
             );
           case "list": {
             const L = block.style === "number" ? "ol" : "ul";

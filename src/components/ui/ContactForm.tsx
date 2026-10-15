@@ -120,8 +120,9 @@ export function ContactForm({ pageId, blockId, heading, intro, submitLabel, succ
           const describedBy = error ? `${id}-error` : undefined;
           const half = field.width === "half" && field.type !== "textarea" && field.type !== "checkbox";
           const control = cn(
-            "mt-2 block w-full rounded-none border-0 border-b bg-transparent px-0 py-3 text-[17px] text-ink transition-colors placeholder:text-ink/35 focus:outline-none",
-            error ? "border-accent-ink" : "border-ink/25 focus:border-ink",
+            "mt-2 block w-full rounded-none border-0 border-b bg-transparent px-0 py-3 text-[17px] text-ink transition-[border-color,box-shadow] duration-200 placeholder:text-ink/35 focus:outline-none",
+            // Focus thickens the rule (box-shadow, so nothing shifts); errors tint it.
+            error ? "border-accent-ink focus:shadow-[0_1px_0_0_var(--color-accent-ink)]" : "border-ink/25 focus:border-ink focus:shadow-[0_1px_0_0_var(--color-ink)]",
           );
           const common = {
             id,
@@ -197,7 +198,7 @@ export function ContactForm({ pageId, blockId, heading, intro, submitLabel, succ
       </div>
 
       {formError && (
-        <p role="alert" className="rounded-xl bg-accent/10 px-4 py-3 text-[14px] text-accent-ink">
+        <p role="alert" className="animate-rise rounded-xl bg-accent/10 px-4 py-3 text-[14px] text-accent-ink">
           {formError}
         </p>
       )}
@@ -219,7 +220,7 @@ export function ContactForm({ pageId, blockId, heading, intro, submitLabel, succ
 function FieldError({ id, error }: { id: string; error?: string }) {
   if (!error) return null;
   return (
-    <p id={id} className="mt-2 text-[13px] text-accent-ink">
+    <p id={id} className="mt-2 animate-[fade-in-plain_0.2s_ease-out] text-[13px] text-accent-ink">
       {error}
     </p>
   );

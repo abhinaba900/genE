@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Inline } from "@/components/article/ArticleBody";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { Reveal } from "@/components/motion/Reveal";
 import { ContactForm } from "@/components/ui/ContactForm";
 import { cn } from "@/lib/cn";
 import type { ArticleBlock, Page, PageBlock } from "@/lib/content/types";
@@ -24,9 +25,9 @@ export function PageView({ page }: { page: Page }) {
         {page.template === "contact" ? (
           <div className="mx-auto grid max-w-[1680px] gap-14 px-5 pt-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:gap-20 md:px-8 md:pt-20 xl:px-12">
             <header>
-              {page.kicker && <p className="kicker text-muted">{page.kicker}</p>}
-              <h1 className="mt-4 font-serif text-display text-ink">{page.title}</h1>
-              {page.intro && <p className="mt-6 max-w-md font-serif text-[21px] leading-[1.5] text-ink/70">{page.intro}</p>}
+              {page.kicker && <p className="enter kicker text-muted">{page.kicker}</p>}
+              <h1 className="enter mt-4 font-serif text-display text-ink [--step:1]">{page.title}</h1>
+              {page.intro && <p className="enter mt-6 max-w-md font-serif text-[21px] leading-[1.5] text-ink/70 [--step:2]">{page.intro}</p>}
               <Notice text={page.notice} />
               <div className="mt-10 space-y-10">
                 {blocks.map((b) => (
@@ -34,7 +35,7 @@ export function PageView({ page }: { page: Page }) {
                 ))}
               </div>
             </header>
-            <div className="md:pt-4">
+            <div className="enter md:pt-4 [--step:2]">
               {formBlocks.map((b) => (
                 <Block key={b.id} block={b} pageId={page.id} />
               ))}
@@ -44,14 +45,14 @@ export function PageView({ page }: { page: Page }) {
           <>
             {page.template === "feature" ? (
               <header className="mx-auto max-w-[1680px] px-5 pb-16 pt-12 md:px-8 md:pt-24 xl:px-12">
-                {page.kicker && <p className="kicker text-muted">{page.kicker}</p>}
-                <h1 className="mt-6 max-w-[16ch] font-serif text-[clamp(2.8rem,1.6rem+5vw,6rem)] leading-[0.98] tracking-[-0.03em] text-ink">
+                {page.kicker && <p className="enter kicker text-muted">{page.kicker}</p>}
+                <h1 className="enter mt-6 max-w-[16ch] font-serif [--step:1] text-[clamp(2.8rem,1.6rem+5vw,6rem)] leading-[0.98] tracking-[-0.03em] text-ink">
                   {page.title}
                 </h1>
-                {page.intro && <p className="mt-8 max-w-2xl font-serif text-[21px] leading-[1.5] text-ink/70">{page.intro}</p>}
+                {page.intro && <p className="enter mt-8 max-w-2xl font-serif text-[21px] leading-[1.5] text-ink/70 [--step:2]">{page.intro}</p>}
               </header>
             ) : (
-              <header className="mx-auto grid max-w-[1680px] gap-6 border-b border-line px-5 pb-12 pt-12 md:grid-cols-[1fr_1fr] md:px-8 md:pt-20 xl:px-12">
+              <header className="enter mx-auto grid max-w-[1680px] gap-6 border-b border-line px-5 pb-12 pt-12 [--motion-rise:8px] md:grid-cols-[1fr_1fr] md:px-8 md:pt-20 xl:px-12">
                 <div>
                   {page.kicker && <p className="kicker text-muted">{page.kicker}</p>}
                   <h1 className="mt-4 font-serif text-display text-ink">{page.title}</h1>
@@ -66,15 +67,22 @@ export function PageView({ page }: { page: Page }) {
             )}
             {page.heroImage && (
               <figure className="mx-auto mt-10 max-w-[1680px] px-5 md:px-8 xl:px-12">
-                <div className="relative overflow-hidden rounded-2xl bg-paper-2" style={{ aspectRatio: `${page.heroImage.width} / ${page.heroImage.height}`, maxHeight: "70vh" }}>
-                  <Image src={page.heroImage.src} alt={page.heroImage.alt} fill sizes="100vw" className="object-cover" priority />
+                <div className="enter-media relative overflow-hidden rounded-2xl bg-paper-2 [--step:2] [--wipe-radius:16px]" style={{ aspectRatio: `${page.heroImage.width} / ${page.heroImage.height}`, maxHeight: "70vh" }}>
+                  <Image src={page.heroImage.src} alt={page.heroImage.alt} fill sizes="100vw" className="enter-settle object-cover [--step:2]" priority />
                 </div>
               </figure>
             )}
             <div className="space-y-24 pt-12 md:pt-16">
-              {blocks.map((b) => (
-                <Block key={b.id} block={b} pageId={page.id} />
-              ))}
+              {/* Feature pages (About) reveal section by section; legal pages stay still for reading. */}
+              {blocks.map((b) =>
+                page.template === "feature" ? (
+                  <Reveal key={b.id}>
+                    <Block block={b} pageId={page.id} />
+                  </Reveal>
+                ) : (
+                  <Block key={b.id} block={b} pageId={page.id} />
+                ),
+              )}
             </div>
           </>
         )}

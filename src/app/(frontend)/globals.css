@@ -49,6 +49,13 @@
 }
 
 @layer base {
+  /* Motion tokens — mirrored for JS in src/components/motion/tokens.ts. */
+  :root {
+    --motion-text: 600ms;
+    --motion-media: 850ms;
+    --motion-step: 80ms;
+    --motion-rise: 20px;
+  }
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
@@ -96,6 +103,30 @@
     animation: var(--animate-shimmer);
   }
 
+  /*
+   * First-paint entrances (CSS only, no JS): page openers and heroes.
+   * They run as soon as the HTML paints, so above-the-fold content never waits for
+   * hydration, and they end visible (`both`) even if scripts never load.
+   * Sequence with `--step` (0, 1, 2…), e.g. `class="enter [--step:2]"`.
+   */
+  .enter {
+    animation: enter var(--motion-text) var(--ease-out-soft) both;
+    animation-delay: calc(var(--step, 0) * var(--motion-step));
+  }
+  /* Image wipe for hero media: bottom-up clip, paired with `.enter-settle` on the image. */
+  .enter-media {
+    animation: media-wipe var(--motion-media) var(--ease-out-soft) both;
+    animation-delay: calc(var(--step, 0) * var(--motion-step));
+  }
+  /* Pastel category masthead: a short top-down wipe behind the title sequence. */
+  .enter-band {
+    animation: band-wipe var(--motion-text) var(--ease-out-soft) both;
+  }
+  .enter-settle {
+    animation: media-settle calc(var(--motion-media) + 350ms) var(--ease-out-soft) both;
+    animation-delay: calc(var(--step, 0) * var(--motion-step));
+  }
+
   /* Long-form article typography. */
   .prose-article {
     font-family: var(--font-serif);
@@ -118,6 +149,22 @@
   }
 }
 
+/* Smooth scrolling (Lenis): the parts of lenis.css we need, minus its iframe pointer lock,
+   which would make article embeds unclickable. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 @utility scrollbar-none {
   scrollbar-width: none;
   &::-webkit-scrollbar { display: none; }
@@ -133,10 +180,32 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+@keyframes enter {
+  from { opacity: 0; transform: translateY(var(--motion-rise)); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes media-wipe {
+  from { clip-path: inset(100% 0 0 0 round var(--wipe-radius, 0px)); }
+  to { clip-path: inset(0 0 0 0 round var(--wipe-radius, 0px)); }
+}
+@keyframes band-wipe {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0); }
+}
+@keyframes player-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes media-settle {
+  from { transform: scale(1.06); }
+  to { transform: none; }
 }
 
 /* Keyframes referenced by arbitrary `[animation:…]` utilities. */

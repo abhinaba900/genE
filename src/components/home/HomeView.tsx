@@ -3,6 +3,7 @@ import { toFeedStory } from "@/components/feed/types";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { Reveal } from "@/components/motion/Reveal";
 import { JsonLd, websiteJsonLd } from "@/components/seo/JsonLd";
 import { CategoryTiles } from "@/components/stories/CategoryTiles";
 import { FeaturedStory } from "@/components/stories/FeaturedStory";
@@ -45,50 +46,61 @@ export function HomeView({ feed, home, stories, nav }: { feed: StorySummary[]; h
           )}
 
           <section aria-labelledby="reels-heading" className="pt-6">
-            <SectionHeading
-              id="reels-heading"
-              kicker="In motion"
-              title="Today’s reels"
-              link={{ label: "Open the reel", href: "/watch" }}
-            />
+            <Reveal>
+              <SectionHeading
+                id="reels-heading"
+                kicker="In motion"
+                title="Today’s reels"
+                link={{ label: "Open the reel", href: "/watch" }}
+              />
+            </Reveal>
             <ul className="mt-8 grid grid-cols-3 gap-5 lg:grid-cols-5">
               {reels.map((s, i) => (
-                <li key={s.id} className={i > 2 ? "hidden lg:block" : undefined}>
+                <Reveal as="li" key={s.id} index={i} className={i > 2 ? "hidden lg:block" : undefined}>
                   <StoryCard story={s} variant="reel" />
-                </li>
+                </Reveal>
               ))}
             </ul>
           </section>
 
           <div className="mt-24 grid gap-14 lg:grid-cols-[minmax(0,1fr)_340px] xl:gap-20">
             <section aria-labelledby="latest-heading">
-              <SectionHeading
-                id="latest-heading"
-                kicker="Fresh from the newsroom"
-                title="Latest stories"
-                link={{ label: "View all stories", href: "/latest" }}
-              />
-              {lead && <StoryCard story={lead} variant="wide" className="mt-8" />}
+              <Reveal>
+                <SectionHeading
+                  id="latest-heading"
+                  kicker="Fresh from the newsroom"
+                  title="Latest stories"
+                  link={{ label: "View all stories", href: "/latest" }}
+                />
+              </Reveal>
+              {/* Lead story gets the image wipe; supporting cards a shorter lift, two per row. */}
+              {lead && (
+                <Reveal className="mt-8">
+                  <StoryCard story={lead} variant="wide" reveal />
+                </Reveal>
+              )}
               <ul className="mt-6 grid gap-6 sm:grid-cols-2">
-                {rest.map((s) => (
-                  <li key={s.id} className="h-full">
+                {rest.map((s, i) => (
+                  <Reveal as="li" key={s.id} index={i % 2} className="h-full">
                     <StoryCard story={s} variant="panel" className="h-full" />
-                  </li>
+                  </Reveal>
                 ))}
               </ul>
             </section>
-            <div className="lg:pt-[76px]">
+            <Reveal className="lg:pt-[76px]" index={2}>
               <Sidebar highlights={highlights} categories={topics} />
-            </div>
+            </Reveal>
           </div>
 
           <section aria-labelledby="topics-heading" className="mt-24">
-            <SectionHeading
-              id="topics-heading"
-              kicker="Browse"
-              title="Explore by topic"
-              link={{ label: "All categories", href: "/categories" }}
-            />
+            <Reveal>
+              <SectionHeading
+                id="topics-heading"
+                kicker="Browse"
+                title="Explore by topic"
+                link={{ label: "All categories", href: "/categories" }}
+              />
+            </Reveal>
             <div className="mt-8">
               <CategoryTiles categories={topics} stories={stories} />
             </div>

@@ -53,7 +53,7 @@ export function FeaturedVideo({ src, poster, title }: { src: string; poster: str
 
   return (
     <div ref={frame} className="relative aspect-[9/16] h-full overflow-hidden rounded-[22px] bg-ink">
-      <Image src={poster} alt="" fill priority sizes="(min-width: 768px) 380px, 100vw" className="object-cover" />
+      <Image src={poster} alt="" fill priority sizes="(min-width: 768px) 380px, 100vw" className="enter-settle object-cover [--step:1]" />
       {enabled && (
         <video
           ref={video}
@@ -64,7 +64,7 @@ export function FeaturedVideo({ src, poster, title }: { src: string; poster: str
           preload="metadata"
           aria-label={`Video: ${title}`}
           onPlaying={() => setReady(true)}
-          className={cn("absolute inset-0 size-full object-cover transition-opacity duration-700", ready ? "opacity-100" : "opacity-0")}
+          className={cn("enter-settle absolute inset-0 size-full object-cover transition-opacity duration-700 [--step:1]", ready ? "opacity-100" : "opacity-0")}
         />
       )}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/50 to-transparent" />
@@ -74,7 +74,7 @@ export function FeaturedVideo({ src, poster, title }: { src: string; poster: str
             type="button"
             onClick={() => setUserPaused((p) => !p)}
             aria-label={userPaused ? "Play video" : "Pause video"}
-            className="flex size-10 items-center justify-center rounded-full bg-black/40 text-white ring-1 ring-white/20 transition hover:bg-black/60"
+            className="flex size-10 items-center justify-center rounded-full bg-black/40 text-white ring-1 ring-white/20 transition duration-200 hover:bg-black/60 active:scale-90"
           >
             {userPaused ? <Play className="ml-0.5 size-4 fill-current" /> : <Pause className="size-4 fill-current" />}
           </button>
@@ -83,7 +83,7 @@ export function FeaturedVideo({ src, poster, title }: { src: string; poster: str
             onClick={() => setMuted((m) => !m)}
             aria-label={muted ? "Unmute video" : "Mute video"}
             aria-pressed={!muted}
-            className="flex size-10 items-center justify-center rounded-full bg-black/40 text-white ring-1 ring-white/20 transition hover:bg-black/60"
+            className="flex size-10 items-center justify-center rounded-full bg-black/40 text-white ring-1 ring-white/20 transition duration-200 hover:bg-black/60 active:scale-90"
           >
             {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
           </button>

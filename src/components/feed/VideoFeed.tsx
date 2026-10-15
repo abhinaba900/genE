@@ -294,6 +294,8 @@ export function VideoFeed({ stories, nav, activeCategory, variant = "mobile" }: 
 
   return (
     <div
+      // The reel has its own snap/wheel handling; keep page smooth-scrolling out of it.
+      data-lenis-prevent
       className={cn(
         "fixed inset-0 z-30 overflow-hidden bg-night text-white",
         standalone && "md:flex md:items-stretch md:justify-center",
@@ -318,7 +320,7 @@ export function VideoFeed({ stories, nav, activeCategory, variant = "mobile" }: 
         ref={frame}
         className={cn(
           "relative h-full w-full",
-          standalone && "md:aspect-[9/16] md:h-full md:w-auto md:max-w-full md:shadow-[0_0_80px_rgb(0_0_0/0.5)]",
+          standalone && "md:aspect-[9/16] md:h-full md:w-auto md:max-w-full md:shadow-[0_0_80px_rgb(0_0_0/0.5)] md:animate-[player-in_0.5s_var(--ease-out-soft)_both]",
         )}
       >
         {/* Persistent top bar */}

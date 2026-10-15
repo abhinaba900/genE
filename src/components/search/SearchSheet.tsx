@@ -241,7 +241,7 @@ function Sheet({ open, onClose, nav }: { open: boolean; onClose: () => void; nav
     <LazyMotion features={domAnimation} strict>
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-[70]" onClick={(e) => e.stopPropagation()}>
+          <div data-lenis-prevent className="fixed inset-0 z-[70]" onClick={(e) => e.stopPropagation()}>
             <m.div
               aria-hidden
               className="absolute inset-0 bg-black/55"

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { Reveal } from "@/components/motion/Reveal";
 import { StoryRow } from "@/components/stories/StoryRow";
 import { getCategories, getHighlights, getStories } from "@/lib/content";
 
@@ -20,20 +21,21 @@ export default async function LatestPage() {
       <SiteHeader />
       <main id="main" className="mx-auto max-w-[1680px] px-5 md:px-8 xl:px-12">
         <header className="border-b border-ink pb-8 pt-12 md:pt-16">
-          <p className="kicker text-muted">Updated continuously</p>
-          <h1 className="mt-4 font-serif text-display text-ink">Latest stories</h1>
+          <p className="enter kicker text-muted">Updated continuously</p>
+          <h1 className="enter mt-4 font-serif text-display text-ink [--step:1]">Latest stories</h1>
         </header>
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_340px] xl:gap-20">
           <ol aria-label="Stories, newest first">
+            {/* Each row reveals on its own as it scrolls in, so a long list never queues up. */}
             {stories.map((s) => (
-              <li key={s.id}>
+              <Reveal as="li" key={s.id}>
                 <StoryRow story={s} />
-              </li>
+              </Reveal>
             ))}
           </ol>
-          <div className="hidden pt-8 lg:block">
+          <Reveal className="hidden pt-8 lg:block" index={2}>
             <Sidebar highlights={highlights} categories={categories} />
-          </div>
+          </Reveal>
         </div>
       </main>
       <SiteFooter />

@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2, Search, X } from "lucide-react";
+import { m } from "motion/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { StoryRow } from "@/components/stories/StoryRow";
@@ -8,6 +9,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import type { StorySummary } from "@/lib/content/types";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { watchPath } from "@/lib/site";
+import { EASE, STAGGER } from "@/components/motion/tokens";
 
 const DEBOUNCE_MS = 220;
 
@@ -98,7 +100,7 @@ export function SearchInterface({
           placeholder="Search stories, topics, tags…"
           autoComplete="off"
           enterKeyHint="search"
-          className="h-20 w-full border-b-2 border-ink bg-transparent pl-10 pr-12 font-serif text-[28px] tracking-[-0.01em] text-ink placeholder:text-ink/30 focus:outline-none md:h-24 md:pl-14 md:text-[44px] [&::-webkit-search-cancel-button]:hidden"
+          className="h-20 w-full border-b-2 border-ink bg-transparent pl-10 pr-12 font-serif transition-shadow duration-200 focus:shadow-[0_2px_0_0_var(--color-ink)] text-[28px] tracking-[-0.01em] text-ink placeholder:text-ink/30 focus:outline-none md:h-24 md:pl-14 md:text-[44px] [&::-webkit-search-cancel-button]:hidden"
         />
         <span className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center">
           {loading ? (
@@ -169,15 +171,21 @@ export function SearchInterface({
             />
           ) : (
             <ol className="mt-2">
-              {results.map((s) => (
-                <li key={s.id}>
+              {results.map((s, i) => (
+                // Keyed by story: rows that stay between queries don't re-animate, new ones lift in.
+                <m.li
+                  key={s.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, ease: EASE, delay: Math.min(i, 5) * (STAGGER / 2) }}
+                >
                   <StoryRow
                     story={s}
                     as="h3"
                     highlight={settledQuery}
                     href={openInReel ? `${watchPath(s.slug)}&play=1` : undefined}
                   />
-                </li>
+                </m.li>
               ))}
             </ol>
           )}

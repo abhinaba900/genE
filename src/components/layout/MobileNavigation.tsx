@@ -103,7 +103,7 @@ function Drawer({ open, onClose, nav }: { open: boolean; onClose: () => void; na
     <LazyMotion features={domAnimation} strict>
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-[60]" onClick={(e) => e.stopPropagation()}>
+          <div data-lenis-prevent className="fixed inset-0 z-[60]" onClick={(e) => e.stopPropagation()}>
             <m.div
               className="absolute inset-0 bg-black/55"
               initial={{ opacity: 0 }}

@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Newsreader } from "next/font/google";
+import { MotionProvider } from "@/components/motion/MotionProvider";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { getSiteSettings } from "@/lib/content";
 import { SITE_NAME, SITE_URL, shareImage } from "@/lib/site";
 import "./globals.css";
@@ -58,7 +60,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        {children}
+        {/* Scroll reveals start hidden; without JavaScript, show everything. */}
+        <noscript>
+          <style>{"[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}"}</style>
+        </noscript>
+        <MotionProvider>{children}</MotionProvider>
+        <SmoothScroll />
       </body>
     </html>
   );

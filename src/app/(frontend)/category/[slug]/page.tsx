@@ -8,6 +8,7 @@ import { getNavData } from "@/components/layout/getNavData";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { Reveal } from "@/components/motion/Reveal";
 import { StoryCard } from "@/components/stories/StoryCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { findCategoryRedirect, getCategories, getCategory, getFeed, getHighlights, getStories } from "@/lib/content";
@@ -62,21 +63,21 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
 
         {/* Desktop: editorial category page */}
         <div className="hidden md:block">
-          <section aria-labelledby="category-title" style={{ backgroundColor: category.tint }}>
+          <section aria-labelledby="category-title" className="enter-band" style={{ backgroundColor: category.tint }}>
             <div className="mx-auto flex max-w-[1680px] items-end justify-between gap-10 px-8 pb-12 pt-16 xl:px-12">
-              <div className="animate-rise">
-                <p className="kicker text-ink/55">Category</p>
-                <h1 id="category-title" className="mt-4 font-serif text-display text-ink">
+              <div>
+                <p className="enter kicker text-ink/55">Category</p>
+                <h1 id="category-title" className="enter mt-4 font-serif text-display text-ink [--step:1]">
                   {category.name}
                 </h1>
-                <p className="mt-4 max-w-xl text-[18px] leading-relaxed text-ink/70">{category.description}</p>
+                <p className="enter mt-4 max-w-xl text-[18px] leading-relaxed text-ink/70 [--step:2]">{category.description}</p>
               </div>
               {stories.length > 0 && (
                 <Link
                   href={watchPath(undefined, slug)}
-                  className="inline-flex h-12 shrink-0 items-center gap-2.5 rounded-full bg-ink px-6 text-[15px] font-medium text-white transition-colors hover:bg-ink-2"
+                  className="enter group inline-flex h-12 shrink-0 items-center gap-2.5 rounded-full bg-ink px-6 text-[15px] font-medium text-white transition-[background-color,scale] duration-200 hover:bg-ink-2 active:scale-[0.97] [--step:3]"
                 >
-                  <Play className="size-3.5 fill-current" aria-hidden />
+                  <Play className="size-3.5 fill-current transition-transform duration-200 ease-out-soft group-hover:scale-125" aria-hidden />
                   Watch {category.name} reels
                 </Link>
               )}
@@ -92,20 +93,28 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
               />
             ) : (
               <section aria-label={`${category.name} stories`}>
-                <p className="text-[14px] text-muted">
+                <p className="enter text-[14px] text-muted [--step:3]">
                   {stories.length} {stories.length === 1 ? "story" : "stories"}
                 </p>
-                {lead && <StoryCard story={lead} variant="wide" as="h2" priority className="mt-4" />}
+                {/* Featured story: image wipe + text lift; supporting cards stagger two per row. */}
+                {lead && (
+                  <Reveal className="mt-4">
+                    <StoryCard story={lead} variant="wide" as="h2" priority reveal />
+                  </Reveal>
+                )}
                 <ul className="mt-6 grid gap-6 sm:grid-cols-2">
-                  {rest.map((s) => (
-                    <li key={s.id} className="h-full">
+                  {rest.map((s, i) => (
+                    <Reveal as="li" key={s.id} index={i % 2} className="h-full">
                       <StoryCard story={s} variant="panel" as="h2" className="h-full" />
-                    </li>
+                    </Reveal>
                   ))}
                 </ul>
               </section>
             )}
-            <Sidebar highlights={highlights} categories={categories} />
+            {/* Sidebar stays calm: one gentle fade-lift for the whole column. */}
+            <Reveal index={2}>
+              <Sidebar highlights={highlights} categories={categories} />
+            </Reveal>
           </div>
         </div>
       </main>
