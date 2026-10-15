@@ -89,10 +89,10 @@ export function StoryArticle({ story, related, preview = false }: { story: Story
 
             <section aria-label="About the author" className="mt-10 flex gap-4 rounded-2xl p-6" style={{ backgroundColor: story.category.tint }}>
               <div>
-                <p className="kicker text-ink/55">Written by</p>
+                <p className="kicker text-ink/65">Written by</p>
                 <p className="mt-2 font-serif text-[22px] text-ink">{story.author.name}</p>
                 <p className="text-[14px] text-ink/70">{story.author.role}</p>
-                <p className="mt-2 text-[14px] leading-relaxed text-ink/60">{story.author.bio}</p>
+                <p className="mt-2 text-[14px] leading-relaxed text-ink/65">{story.author.bio}</p>
               </div>
             </section>
           </footer>

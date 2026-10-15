@@ -21,7 +21,7 @@ export function DesktopNavigation({ nav }: { nav: NavData }) {
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   "relative inline-flex h-10 items-center whitespace-nowrap rounded-full px-3 text-[14px] font-medium transition-colors xl:px-3.5",
-                  active ? "text-ink" : "text-ink/60 hover:text-ink",
+                  active ? "text-ink" : "text-ink/65 hover:text-ink",
                 )}
               >
                 {link.label}

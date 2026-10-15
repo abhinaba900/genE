@@ -11,7 +11,7 @@ export function FeaturedStory({ story }: { story: StorySummary }) {
     <section aria-labelledby="featured-title" className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_auto] lg:gap-16 xl:gap-20">
       <div className="max-w-[640px] 2xl:max-w-[780px]">
         {/* Sequenced first-paint entrance: eyebrow → headline → standfirst → byline → actions. */}
-        <p className="enter kicker flex items-center gap-2.5 text-ink/60">
+        <p className="enter kicker flex items-center gap-2.5 text-ink/65">
           <span aria-hidden className="size-1.5 rounded-full bg-accent" />
           Featured · {story.category.name}
         </p>

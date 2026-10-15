@@ -16,13 +16,13 @@ export function ArticleHeader({ story }: { story: Story }) {
   return (
     <header className="mx-auto grid max-w-[1680px] items-center gap-10 px-5 pt-8 md:px-8 md:pt-14 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_400px] xl:gap-20 xl:px-12">
       <div>
-        <p className="enter kicker flex flex-wrap items-center gap-2.5 text-ink/60">
+        <p className="enter kicker flex flex-wrap items-center gap-2.5 text-ink/65">
           <span aria-hidden className="size-1.5 rounded-full bg-accent" />
           <Link href={categoryPath(story.category.slug)} className="hover:text-ink">
             {story.category.name}
           </Link>
           {story.isDemo && (
-            <span className="rounded-full px-2 py-0.5 text-[9px] tracking-[0.16em] text-ink/55 ring-1 ring-ink/20">
+            <span className="rounded-full px-2 py-0.5 text-[9px] tracking-[0.16em] text-ink/65 ring-1 ring-ink/20">
               Demo story
             </span>
           )}
@@ -57,6 +57,9 @@ export function ArticleHeader({ story }: { story: Story }) {
       </div>
 
       {/* Film wipes up on first paint (no settle scale: it may already be playing). */}
+      {/* The film's poster is the page's largest paint: a real <link> (React hoists it to <head>)
+          so the browser's preload scanner fetches it with the HTML, not after hydration. */}
+      {story.video.poster && <link rel="preload" as="image" href={story.video.poster} fetchPriority="high" />}
       <div className="enter-media -mx-5 [--step:1] sm:mx-auto sm:w-[400px] sm:[--wipe-radius:22px] lg:w-full">
         <ArticleMedia
           video={story.video}

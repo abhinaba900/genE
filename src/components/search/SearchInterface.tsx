@@ -1,7 +1,7 @@
 "use client";
 
 import { Loader2, Search, X } from "lucide-react";
-import { m } from "motion/react";
+import { LazyMotion, domAnimation, m } from "motion/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { StoryRow } from "@/components/stories/StoryRow";
@@ -89,7 +89,7 @@ export function SearchInterface({
         <label htmlFor="search-input" className="sr-only">
           Search stories
         </label>
-        <Search className="pointer-events-none absolute left-0 top-1/2 size-6 -translate-y-1/2 text-ink/40 md:size-8" strokeWidth={1.6} aria-hidden />
+        <Search className="pointer-events-none absolute left-0 top-1/2 size-6 -translate-y-1/2 text-ink/65 md:size-8" strokeWidth={1.6} aria-hidden />
         <input
           ref={input}
           id="search-input"
@@ -114,7 +114,7 @@ export function SearchInterface({
                   input.current?.focus();
                 }}
                 aria-label="Clear search"
-                className="flex size-11 items-center justify-center rounded-full text-ink/60 hover:bg-ink/5 hover:text-ink"
+                className="flex size-11 items-center justify-center rounded-full text-ink/65 hover:bg-ink/5 hover:text-ink"
               >
                 <X className="size-5" />
               </button>
@@ -170,6 +170,8 @@ export function SearchInterface({
               action={{ label: "Browse latest stories", href: "/latest" }}
             />
           ) : (
+            // Motion is loaded here only (not site-wide); `domAnimation` is the small feature set.
+            <LazyMotion features={domAnimation} strict>
             <ol className="mt-2">
               {results.map((s, i) => (
                 // Keyed by story: rows that stay between queries don't re-animate, new ones lift in.
@@ -188,6 +190,7 @@ export function SearchInterface({
                 </m.li>
               ))}
             </ol>
+            </LazyMotion>
           )}
         </section>
       )}

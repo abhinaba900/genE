@@ -66,7 +66,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
           <section aria-labelledby="category-title" className="enter-band" style={{ backgroundColor: category.tint }}>
             <div className="mx-auto flex max-w-[1680px] items-end justify-between gap-10 px-8 pb-12 pt-16 xl:px-12">
               <div>
-                <p className="enter kicker text-ink/55">Category</p>
+                <p className="enter kicker text-ink/65">Category</p>
                 <h1 id="category-title" className="enter mt-4 font-serif text-display text-ink [--step:1]">
                   {category.name}
                 </h1>

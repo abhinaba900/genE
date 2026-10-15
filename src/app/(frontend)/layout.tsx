@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Newsreader } from "next/font/google";
-import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { getSiteSettings } from "@/lib/content";
 import { SITE_NAME, SITE_URL, shareImage } from "@/lib/site";
@@ -51,8 +50,11 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Media (film posters, stills, video) is served straight from the CDN: open that connection early.
+  const cdn = process.env.BUNNY_CDN_URL ? new URL(process.env.BUNNY_CDN_URL).origin : null;
   return (
     <html lang="en-GB" className={`${geist.variable} ${newsreader.variable}`}>
+      <head>{cdn && <link rel="preconnect" href={cdn} />}</head>
       <body className="min-h-dvh"  cz-shortcut-listen="true">
         <a
           href="#main"
@@ -60,11 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        {/* Scroll reveals start hidden; without JavaScript, show everything. */}
-        <noscript>
-          <style>{"[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}"}</style>
-        </noscript>
-        <MotionProvider>{children}</MotionProvider>
+        {children}
         <SmoothScroll />
       </body>
     </html>

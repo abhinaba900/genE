@@ -27,9 +27,9 @@ export default async function LatestPage() {
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_340px] xl:gap-20">
           <ol aria-label="Stories, newest first">
             {/* Each row reveals on its own as it scrolls in, so a long list never queues up. */}
-            {stories.map((s) => (
+            {stories.map((s, i) => (
               <Reveal as="li" key={s.id}>
-                <StoryRow story={s} />
+                <StoryRow story={s} priority={i < 2} />
               </Reveal>
             ))}
           </ol>

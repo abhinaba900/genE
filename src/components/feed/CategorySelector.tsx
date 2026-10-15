@@ -47,7 +47,7 @@ export function CategorySelector({
                 onClick={(e) => e.stopPropagation()}
                 className={cn(
                   "relative flex h-10 items-center px-2.5 text-[15px] font-medium tracking-[-0.01em] transition-colors duration-200",
-                  isActive ? "text-white" : "text-white/55 hover:text-white/85",
+                  isActive ? "text-white" : "text-white/65 hover:text-white/85",
                 )}
               >
                 {c.name}

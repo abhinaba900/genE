@@ -39,7 +39,7 @@ export function Sidebar({
                 {i + 1}
               </span>
               <div>
-                <p className="kicker text-ink/50">{s.category.name}</p>
+                <p className="kicker text-ink/65">{s.category.name}</p>
                 <h3 className="mt-1.5 font-serif text-[17px] leading-snug text-ink">
                   <Link href={storyPath(s.slug)} className="after:absolute after:inset-0 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">
                     {s.title}

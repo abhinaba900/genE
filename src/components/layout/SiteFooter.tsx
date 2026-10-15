@@ -19,7 +19,7 @@ export async function SiteFooter() {
           />
           <FooterColumn title="gen.E" links={[...nav.secondary, ...nav.legal]} />
         </div>
-        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-6 text-[12px] text-white/45 md:flex-row md:items-center md:justify-between">
+        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-6 text-[12px] text-white/65 md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} {nav.footer.copyright || "gen.E"}.
           </p>
@@ -44,7 +44,7 @@ export async function SiteFooter() {
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
     <nav aria-label={title}>
-      <h2 className="kicker text-white/40">{title}</h2>
+      <h2 className="kicker text-white/65">{title}</h2>
       <ul className="mt-4 space-y-1">
         {links.map((l) => (
           <li key={l.href}>

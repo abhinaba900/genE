@@ -1,53 +1,27 @@
 "use client";
 
-import { m, useReducedMotion, type Variants } from "motion/react";
-import { useRef, type ReactNode } from "react";
-import { DURATION, EASE } from "./tokens";
-import { useReveal } from "./useReveal";
-
-const wipe: Variants = {
-  hidden: { clipPath: "inset(100% 0% 0% 0%)" },
-  visible: (calm: boolean) => ({
-    clipPath: "inset(0% 0% 0% 0%)",
-    transition: calm ? { duration: 0 } : { duration: DURATION.media, ease: EASE },
-  }),
-};
-
-const settle: Variants = {
-  hidden: { scale: 1.06 },
-  visible: (calm: boolean) => ({
-    scale: 1,
-    transition: calm ? { duration: 0 } : { duration: DURATION.media + 0.35, ease: EASE },
-  }),
-};
+import { useLayoutEffect, useRef, type ReactNode } from "react";
+import { registerReveal } from "./reveal-observer";
 
 /**
- * Bottom-up image wipe with a gentle 1.06 → 1 settle, played once on scroll-in.
+ * Bottom-up image wipe with a gentle 1.06 → 1 settle, played when the image is in view.
  * Renders the media container itself: pass the container's classes as `className`
- * (it must be `relative`) and the image as children. Reduced motion shows the image immediately.
+ * (it must be `relative`) and the image as children.
  *
- * The container is what's observed and the clip sits on an inner layer: IntersectionObserver
- * honours a target's own clip-path, so a fully clipped element would never count as in view.
+ * Same model as `Reveal`: visible in the server HTML with a first-paint wipe, hidden after
+ * hydration only if it's below the fold. The clip sits on an inner layer because
+ * IntersectionObserver honours a target's own clip-path. Styles: `[data-wipe]` in globals.css.
  */
 export function ImageReveal({ className, children }: { className?: string; children: ReactNode }) {
-  const calm = useReducedMotion() ?? false;
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useReveal(ref);
+  useLayoutEffect(() => (ref.current ? registerReveal(ref.current) : undefined), []);
   return (
-    <div ref={ref} className={className}>
-      <m.div
-        data-reveal
-        className="absolute inset-0 overflow-hidden"
-        variants={wipe}
-        custom={calm}
-        initial="hidden"
-        // Own in-view state (not `whileInView`), so it still plays when nested in a Reveal.
-        animate={inView ? "visible" : "hidden"}
-      >
-        <m.div data-reveal className="absolute inset-0" variants={settle} custom={calm}>
+    <div ref={ref} data-wipe="" className={className}>
+      <div data-wipe-clip="" className="absolute inset-0 overflow-hidden">
+        <div data-wipe-settle="" className="absolute inset-0">
           {children}
-        </m.div>
-      </m.div>
+        </div>
+      </div>
     </div>
   );
 }

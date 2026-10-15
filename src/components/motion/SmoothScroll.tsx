@@ -1,6 +1,6 @@
 "use client";
 
-import Lenis from "lenis";
+import type Lenis from "lenis";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useAnyOverlayOpen } from "@/lib/overlay";
@@ -9,7 +9,7 @@ import { useAnyOverlayOpen } from "@/lib/overlay";
  * Smooth, eased page scrolling for mouse wheels and trackpads (Lenis).
  *
  * - Off for reduced motion and touch-first devices, where native scrolling is better.
- *   It reacts live if either setting changes.
+ *   It reacts live if either setting changes. The library is only downloaded when it's used.
  * - It still drives the real window scroll, so sticky headers, IntersectionObserver
  *   reveals, the reading-progress bar and browser back/forward behave as before.
  * - Nested scrollers (reel feed, menu drawer, search sheet, category strip) keep native
@@ -27,10 +27,13 @@ export function SmoothScroll() {
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-    const sync = () => {
+    let disposed = false;
+    const sync = async () => {
       const want = !calm.matches && fine.matches;
       if (want && !lenis.current) {
-        lenis.current = new Lenis({
+        const { default: LenisCtor } = await import("lenis");
+        if (disposed || lenis.current || calm.matches || !fine.matches) return;
+        lenis.current = new LenisCtor({
           autoRaf: true,
           lerp: 0.1,
           wheelMultiplier: 1,
@@ -47,6 +50,7 @@ export function SmoothScroll() {
     calm.addEventListener("change", sync);
     fine.addEventListener("change", sync);
     return () => {
+      disposed = true;
       calm.removeEventListener("change", sync);
       fine.removeEventListener("change", sync);
       lenis.current?.destroy();

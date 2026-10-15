@@ -1,58 +1,47 @@
 "use client";
 
-import { m, useReducedMotion, type Variants } from "motion/react";
-import { useRef, type CSSProperties, type ReactNode } from "react";
-import { DURATION, EASE, RISE, staggerDelay } from "./tokens";
-import { useReveal } from "./useReveal";
+import { useLayoutEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { staggerDelay } from "./tokens";
+import { registerReveal } from "./reveal-observer";
 
-const tags = { div: m.div, li: m.li, section: m.section, figure: m.figure, aside: m.aside } as const;
-
-const variants: Variants = {
-  hidden: { opacity: 0, y: RISE },
-  visible: ({ delay, calm }: { delay: number; calm: boolean }) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: calm ? DURATION.calm : DURATION.text, ease: EASE, delay: calm ? 0 : delay },
-  }),
-};
+type Tag = "div" | "li" | "section" | "figure" | "aside";
 
 /**
- * Fades and lifts its content in the first time it scrolls into view.
- * Use it for below-the-fold blocks; page openers use the CSS `.enter` classes instead,
- * so first-paint content never waits for hydration.
+ * Fades and lifts its content in when it's genuinely in view (top past ~78% of the screen).
+ *
+ * Pure CSS + one shared IntersectionObserver (no animation runtime): the server HTML is
+ * visible and plays a first-paint entrance; after hydration, items below the fold are
+ * hidden and revealed on scroll. See `[data-reveal]` in globals.css.
  *
  * `index` staggers siblings: pass the item's column (e.g. `i % 3`) for row-by-row grids,
  * or omit it for long lists so every row enters on its own without queuing.
  */
 export function Reveal({
-  as = "div",
+  as: Tag = "div",
   index,
   className,
   style,
   children,
 }: {
-  as?: keyof typeof tags;
+  as?: Tag;
   index?: number;
   className?: string;
   style?: CSSProperties;
   children: ReactNode;
 }) {
-  const calm = useReducedMotion() ?? false;
-  // All tags share HTMLElement props; type them as one so the ref and props line up.
-  const Tag = tags[as] as typeof m.div;
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useReveal(ref);
+  const ref = useRef<HTMLElement | null>(null);
+  // Runs before paint, so a below-the-fold item is hidden before it could be seen.
+  useLayoutEffect(() => (ref.current ? registerReveal(ref.current) : undefined), []);
+  const delay = staggerDelay(index);
   return (
     <Tag
-      data-reveal
+      // Callback ref keeps one ref type across the different tags.
+      ref={(el: HTMLElement | null) => {
+        ref.current = el;
+      }}
+      data-reveal=""
       className={className}
-      style={style}
-      variants={variants}
-      custom={{ delay: staggerDelay(index), calm }}
-      ref={ref}
-      initial="hidden"
-      // Own in-view state (not `whileInView`), so a reveal nested in another reveal still plays.
-      animate={inView ? "visible" : "hidden"}
+      style={delay ? ({ ...style, "--reveal-delay": `${Math.round(delay * 1000)}ms` } as CSSProperties) : style}
     >
       {children}
     </Tag>

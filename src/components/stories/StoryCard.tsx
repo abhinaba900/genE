@@ -78,7 +78,7 @@ export function StoryCard({ story, variant = "reel", as: Heading = "h3", priorit
             </Link>
           </Heading>
           <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink/70">{story.excerpt}</p>
-          <p className="mt-6 text-[13px] text-ink/55">
+          <p className="mt-6 text-[13px] text-ink/65">
             By {story.author.name} · {story.readingTime} min read
           </p>
         </div>
@@ -170,7 +170,7 @@ function WideMedia({ reveal, children }: { reveal?: boolean; children: React.Rea
 
 function Meta({ story }: { story: StorySummary }) {
   return (
-    <p className="kicker flex items-center gap-2 text-ink/60">
+    <p className="kicker flex items-center gap-2 text-ink/65">
       <span>{story.category.name}</span>
       <span aria-hidden className="size-[3px] rounded-full bg-ink/30" />
       <time dateTime={story.publishedAt} className="normal-case tracking-normal">

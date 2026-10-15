@@ -9,10 +9,13 @@ export function CategoryTiles({
   categories,
   stories,
   headingLevel = "h3",
+  eager = 0,
 }: {
   categories: Category[];
   stories: StorySummary[];
   headingLevel?: "h2" | "h3";
+  /** How many leading tiles load their posters eagerly (those visible on first paint). */
+  eager?: number;
 }) {
   const Heading = headingLevel;
   return (
@@ -60,6 +63,7 @@ export function CategoryTiles({
                       alt=""
                       fill
                       sizes="120px"
+                      priority={i < eager}
                       className="object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.05]"
                     />
                   </div>

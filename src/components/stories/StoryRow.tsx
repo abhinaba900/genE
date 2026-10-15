@@ -12,6 +12,7 @@ export function StoryRow({
   as: Heading = "h2",
   highlight,
   href,
+  priority,
 }: {
   story: StorySummary;
   as?: "h2" | "h3";
@@ -19,6 +20,8 @@ export function StoryRow({
   highlight?: string;
   /** Override the destination (e.g. open the reel instead of the article). Defaults to the article. */
   href?: string;
+  /** Load the poster eagerly (rows visible on first paint — it's often the LCP). */
+  priority?: boolean;
 }) {
   return (
     <article data-hover-card className="group relative grid grid-cols-[96px_minmax(0,1fr)] gap-5 border-b border-line py-7 transition-transform duration-200 ease-out-soft active:scale-[0.99] sm:grid-cols-[132px_minmax(0,1fr)] md:gap-8">
@@ -28,6 +31,7 @@ export function StoryRow({
           alt=""
           fill
           sizes="(min-width: 640px) 132px, 96px"
+          priority={priority}
           className="object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.05] group-focus-within:scale-[1.05]"
         />
         <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-black/45 px-2 py-0.5 text-[10px] font-medium text-white">
@@ -37,7 +41,7 @@ export function StoryRow({
         </span>
       </div>
       <div className="flex min-w-0 flex-col justify-center">
-        <p className="kicker flex flex-wrap items-center gap-2 text-ink/55">
+        <p className="kicker flex flex-wrap items-center gap-2 text-ink/65">
           <span className="inline-flex rounded-full px-2.5 py-1 text-ink" style={{ backgroundColor: story.category.tint }}>
             {story.category.name}
           </span>

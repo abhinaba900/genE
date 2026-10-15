@@ -201,27 +201,31 @@ function Block({ block, pageId, compact = false }: { block: PageBlock; pageId: s
           <Prose blocks={block.blocks} className="text-[20px] leading-[1.6] text-ink/75" />
         </section>
       );
-    case "pillars":
+    case "pillars": {
+      // Keep the outline sequential: pillar titles sit under a (visually hidden) h2.
+      const Title = block.heading ? "h3" : "h2";
       return (
         <section aria-label={block.heading ?? undefined} className={wrap}>
+          {block.heading && <h2 className="sr-only">{block.heading}</h2>}
           <ol className="grid gap-px overflow-hidden rounded-2xl bg-line md:grid-cols-3">
             {block.items.map((p, i) => (
               <li key={p.title} className="bg-paper p-8">
-                <span className="font-serif text-[15px] italic text-accent">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-3 font-serif text-[28px] leading-tight text-ink">{p.title}</h3>
+                <span className="font-serif text-[15px] italic text-accent-ink">{String(i + 1).padStart(2, "0")}</span>
+                <Title className="mt-3 font-serif text-[28px] leading-tight text-ink">{p.title}</Title>
                 <p className="mt-3 text-[15px] leading-relaxed text-ink/70">{p.text}</p>
               </li>
             ))}
           </ol>
         </section>
       );
+    }
     case "statement":
       return (
         <section className="bg-ink py-20 text-white">
           <div className={cn(wrap, "grid gap-12", block.items.length > 1 && "md:grid-cols-2")}>
             {block.items.map((item) => (
               <div key={item.label}>
-                <h2 className="kicker text-white/50">{item.label}</h2>
+                <h2 className="kicker text-white/65">{item.label}</h2>
                 <p className="mt-5 font-serif text-[30px] leading-[1.2] md:text-[38px]">{item.text}</p>
               </div>
             ))}
@@ -233,7 +237,7 @@ function Block({ block, pageId, compact = false }: { block: PageBlock; pageId: s
         <div aria-hidden className={cn(wrap, "grid gap-3 md:gap-5")} style={{ gridTemplateColumns: `repeat(${Math.max(1, block.stories.length)}, minmax(0, 1fr))` }}>
           {block.stories.map((s, i) => (
             <div key={s.id} className="relative aspect-[9/16] overflow-hidden rounded-xl bg-ink md:rounded-2xl" style={{ transform: `translateY(${i % 2 ? 24 : 0}px)` }}>
-              <Image src={s.video.poster} alt="" fill sizes="25vw" className="object-cover" />
+              <Image src={s.video.poster} alt="" fill sizes="25vw" priority className="object-cover" />
             </div>
           ))}
         </div>
@@ -268,7 +272,7 @@ function Block({ block, pageId, compact = false }: { block: PageBlock; pageId: s
         <dl className={cn("space-y-5 text-[15px]", !compact && wrap)}>
           {block.items.map((item) => (
             <div key={item.label}>
-              <dt className="kicker text-ink/50">{item.label}</dt>
+              <dt className="kicker text-ink/65">{item.label}</dt>
               <dd className="mt-1 text-ink">
                 {item.href ? (
                   <a href={item.href} className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink">

@@ -402,7 +402,7 @@ export function VideoFeed({ stories, nav, activeCategory, variant = "mobile" }: 
             aria-hidden
             className="pointer-events-none absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+6px)] z-10 flex justify-center"
           >
-            <span className="flex animate-nudge items-center gap-1 text-[11px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="flex animate-nudge items-center gap-1 text-[11px] font-medium uppercase tracking-[0.18em] text-white">
               <ChevronUp className="size-3.5" strokeWidth={2} />
               {standalone ? "Scroll for next" : "Swipe for next"}
             </span>

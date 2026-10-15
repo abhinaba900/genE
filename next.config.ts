@@ -41,4 +41,22 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPayload(nextConfig, { devBundleServerPackages: false });
+const config = withPayload(nextConfig, { devBundleServerPackages: false });
+
+/*
+ * withPayload adds `Accept-CH` / `Critical-CH: Sec-CH-Prefers-Color-Scheme` to every route so the
+ * admin can pick its theme server-side. `Critical-CH` makes the browser re-request any page that
+ * arrives without that hint — a ~600 ms extra round trip on every first visit (Lighthouse:
+ * "Avoid multiple page redirects"). Only the admin needs it, so scope that header set to /admin.
+ */
+const payloadHeaders = config.headers;
+config.headers = async () => {
+  const rules = (await payloadHeaders?.()) ?? [];
+  return rules.map((rule) =>
+    rule.source === "/:path*" && rule.headers.some((h) => h.key === "Critical-CH")
+      ? { ...rule, source: "/admin/:path*" }
+      : rule,
+  );
+};
+
+export default config;

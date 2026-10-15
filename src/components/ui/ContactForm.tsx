@@ -157,7 +157,7 @@ export function ContactForm({ pageId, blockId, heading, intro, submitLabel, succ
           const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => setValue(key, e.target.value);
           return (
             <div key={key} className={half ? "" : "sm:col-span-2"}>
-              <label htmlFor={id} className="kicker text-ink/60">
+              <label htmlFor={id} className="kicker text-ink/65">
                 {field.label}
                 {field.required && <span className="text-accent-ink"> *</span>}
               </label>

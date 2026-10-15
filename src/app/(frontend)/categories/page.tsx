@@ -25,7 +25,7 @@ export default async function CategoriesPage() {
             Every category opens as a reel on your phone and as an editorial page on larger screens.
           </p>
         </header>
-        <CategoryTiles categories={categories} stories={stories} headingLevel="h2" />
+        <CategoryTiles categories={categories} stories={stories} headingLevel="h2" eager={2} />
       </main>
       <SiteFooter />
     </>

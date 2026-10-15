@@ -149,6 +149,47 @@
   }
 }
 
+/*
+ * Scroll reveals (components/motion/Reveal, ImageReveal + reveal-observer).
+ * Server HTML is visible and plays a first-paint entrance, so nothing on screen waits for JS.
+ * After hydration, below-the-fold items get data-reveal-state="pending" (hidden) and flip to
+ * "shown" when they scroll into view, which transitions them in.
+ */
+[data-reveal] {
+  animation: enter var(--motion-text) var(--ease-out-soft) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal][data-reveal-state] {
+  animation: none;
+  transition:
+    opacity var(--motion-text) var(--ease-out-soft) var(--reveal-delay, 0ms),
+    transform var(--motion-text) var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+[data-reveal][data-reveal-state="pending"] {
+  opacity: 0;
+  transform: translateY(var(--motion-rise));
+}
+[data-wipe-clip] {
+  animation: media-wipe var(--motion-media) var(--ease-out-soft) both;
+}
+[data-wipe-settle] {
+  animation: media-settle calc(var(--motion-media) + 350ms) var(--ease-out-soft) both;
+}
+[data-wipe][data-reveal-state] [data-wipe-clip] {
+  animation: none;
+  transition: clip-path var(--motion-media) var(--ease-out-soft);
+}
+[data-wipe][data-reveal-state] [data-wipe-settle] {
+  animation: none;
+  transition: transform calc(var(--motion-media) + 350ms) var(--ease-out-soft);
+}
+[data-wipe][data-reveal-state="pending"] [data-wipe-clip] {
+  clip-path: inset(100% 0 0 0);
+}
+[data-wipe][data-reveal-state="pending"] [data-wipe-settle] {
+  transform: scale(1.06);
+}
+
 /* Smooth scrolling (Lenis): the parts of lenis.css we need, minus its iframe pointer lock,
    which would make article embeds unclickable. */
 html.lenis,
