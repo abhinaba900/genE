@@ -1,0 +1,1145 @@
+/*
+ * gen.E admin theme — clean, high-contrast and calm. Builds on Payload's own variables.
+ * Neutrals are a cool slate scale; the primary blue and secondary green come from the
+ * gen.E mark, and the editorial orange (#ff5a2c) is kept for brand moments only.
+ */
+:root {
+  --gene-ink: #1e293b;
+  --gene-ink-2: #334155;
+  --gene-muted: #5b6b82;
+  --gene-faint: #94a3b8;
+  --gene-line: #e3e8ef;
+  --gene-line-soft: #eef2f6;
+  --gene-paper: #f2f5f9;
+  --gene-surface: #ffffff;
+  --gene-hover: #f5f8fc;
+  --gene-primary: #2f6fde;
+  --gene-primary-ink: #1f56b8;
+  --gene-primary-soft: #eaf1fd;
+  --gene-green: #5f9e2f;
+  --gene-accent: #ff5a2c;
+  --gene-accent-ink: #c73d14;
+  --gene-radius: 14px;
+  --gene-radius-sm: 10px;
+  --gene-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+  --gene-shadow-lg: 0 10px 30px -12px rgba(15, 23, 42, 0.18), 0 2px 6px rgba(15, 23, 42, 0.05);
+  --gene-ring: 0 0 0 3px rgba(47, 111, 222, 0.22);
+  --nav-width: 260px;
+
+  /* Tone palette — background / foreground pairs that pass WCAG AA for text. */
+  --tone-green-bg: #ecf7e4;
+  --tone-green-fg: #3c7a17;
+  --tone-blue-bg: #e8f0fd;
+  --tone-blue-fg: #1f56b8;
+  --tone-amber-bg: #fdf3dc;
+  --tone-amber-fg: #8a5a07;
+  --tone-violet-bg: #f0ebfe;
+  --tone-violet-fg: #6236c9;
+  --tone-red-bg: #fdecea;
+  --tone-red-fg: #b42318;
+  --tone-slate-bg: #eef2f6;
+  --tone-slate-fg: #475569;
+}
+
+html[data-theme="light"] {
+  --theme-bg: var(--gene-paper);
+  --theme-input-bg: var(--gene-surface);
+  --theme-text: var(--gene-ink);
+  --theme-elevation-0: #ffffff;
+  --theme-elevation-50: #f7f9fc;
+  --theme-elevation-100: #eef2f6;
+  --theme-elevation-150: #e3e8ef;
+  --theme-elevation-200: #d5dde7;
+  --theme-elevation-250: #c7d1de;
+  --theme-elevation-300: #b6c2d2;
+  --theme-elevation-350: #9eadc1;
+  --theme-elevation-400: #8796ad;
+  --theme-elevation-450: #74839a;
+  --theme-elevation-500: #5b6b82;
+  --theme-elevation-550: #4f5e74;
+  --theme-elevation-600: #455468;
+  --theme-elevation-650: #3c495c;
+  --theme-elevation-700: #334155;
+  --theme-elevation-750: #2a3649;
+  --theme-elevation-800: #1e293b;
+  --theme-elevation-850: #172033;
+  --theme-elevation-900: #0f172a;
+  --theme-elevation-950: #0b1220;
+  --theme-elevation-1000: #020617;
+  --theme-success-500: #3c7a17;
+  --style-radius-s: 6px;
+  --style-radius-m: 10px;
+  --style-radius-l: 14px;
+}
+
+body {
+  background: var(--gene-paper);
+  color: var(--gene-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Wordmark / brand ── */
+.gene-wordmark {
+  font-family: "Newsreader", Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  font-size: 34px;
+  letter-spacing: -0.03em;
+  color: var(--gene-ink);
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+}
+.gene-wordmark em { font-style: italic; font-weight: 400; margin-left: 0.12em; }
+.gene-wordmark__dot { width: 0.2em; height: 0.2em; border-radius: 999px; background: var(--gene-accent); margin-left: 0.08em; display: inline-block; }
+.gene-wordmark--icon { font-size: 18px; white-space: nowrap; }
+.gene-login-logo { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.gene-login-logo__img { width: 220px; height: auto; display: block; }
+.gene-nav-icon { width: 28px; height: 28px; display: block; }
+.gene-login-logo__label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gene-muted); }
+.gene-accent-text { color: var(--gene-primary); }
+
+/* ── Top bar (Payload app header) ── */
+.app-header {
+  border-bottom: 1px solid var(--gene-line);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: saturate(180%) blur(10px);
+}
+.app-header__bg { background: transparent !important; }
+.step-nav { font-size: 13.5px; color: var(--gene-muted); }
+.step-nav a { color: var(--gene-muted); }
+.step-nav a:hover { color: var(--gene-primary); }
+.step-nav span:last-child { color: var(--gene-ink); font-weight: 600; }
+.app-header__account img { box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--gene-line); }
+
+/* ── Sidebar navigation ── */
+.nav { background: var(--gene-surface); border-right: 1px solid var(--gene-line); }
+.nav__wrap.gene-nav { padding-top: 18px; }
+.gene-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0 0 22px;
+  padding: 4px 8px;
+  border-radius: var(--gene-radius-sm);
+  color: var(--gene-ink);
+  text-decoration: none;
+}
+.gene-nav__brand img { width: 34px; height: 34px; flex: none; }
+.gene-nav__brand span { display: flex; flex-direction: column; line-height: 1.15; }
+.gene-nav__brand strong { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+.gene-nav__brand small { font-size: 11.5px; color: var(--gene-muted); }
+.gene-nav__sections { display: flex; flex-direction: column; gap: 20px; padding-bottom: 16px; }
+.gene-nav__heading {
+  margin: 0 0 6px;
+  padding: 0 12px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gene-faint);
+}
+.gene-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.gene-nav__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gene-ink-2);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.gene-nav__link svg { color: var(--gene-muted); flex: none; transition: color 0.12s ease; }
+.gene-nav__link:hover { background: var(--gene-hover); color: var(--gene-ink); }
+.gene-nav__link:hover svg { color: var(--gene-ink-2); }
+.gene-nav__link[aria-current="page"] { background: var(--gene-primary-soft); color: var(--gene-primary-ink); font-weight: 600; }
+.gene-nav__link[aria-current="page"] svg { color: var(--gene-primary); }
+.gene-nav__link[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 7px;
+  bottom: 7px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--gene-primary);
+}
+.gene-nav__badge {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--gene-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+.gene-nav__user {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding: 12px 8px !important;
+  border-top: 1px solid var(--gene-line);
+}
+.gene-nav__user-text { display: flex; flex-direction: column; min-width: 0; flex: 1; line-height: 1.25; }
+.gene-nav__user-text strong { font-size: 13.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gene-nav__user-text small { font-size: 12px; color: var(--gene-muted); }
+.gene-nav__user .nav__log-out { color: var(--gene-muted); }
+.gene-nav__user .nav__log-out:hover { color: var(--tone-red-fg); }
+.gene-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gene-primary), #6c9cf0);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ── Status pills ── */
+.gene-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+}
+.gene-status::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+.gene-status--neutral { background: var(--tone-slate-bg); color: var(--tone-slate-fg); }
+.gene-status--info { background: var(--tone-blue-bg); color: var(--tone-blue-fg); }
+.gene-status--warning { background: var(--tone-amber-bg); color: var(--tone-amber-fg); }
+.gene-status--success { background: var(--tone-green-bg); color: var(--tone-green-fg); }
+.gene-status--accent { background: var(--tone-violet-bg); color: var(--tone-violet-fg); }
+.gene-status--muted { background: #f1f3f6; color: #64748b; }
+.gene-status--lg { font-size: 14px; padding: 4px 12px; }
+.gene-badge-group { display: inline-flex; gap: 6px; align-items: center; margin-right: 8px; }
+
+/* ── Tone chips + trend pills (dashboard) ── */
+.gene-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+}
+.gene-chip--sm { width: 28px; height: 28px; border-radius: 8px; }
+.gene-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.gene-chip--green, .gene-pill--green { background: var(--tone-green-bg); color: var(--tone-green-fg); }
+.gene-chip--blue, .gene-pill--blue { background: var(--tone-blue-bg); color: var(--tone-blue-fg); }
+.gene-chip--amber, .gene-pill--amber { background: var(--tone-amber-bg); color: var(--tone-amber-fg); }
+.gene-chip--violet, .gene-pill--violet { background: var(--tone-violet-bg); color: var(--tone-violet-fg); }
+.gene-chip--red, .gene-pill--red { background: var(--tone-red-bg); color: var(--tone-red-fg); }
+.gene-chip--slate, .gene-pill--slate { background: var(--tone-slate-bg); color: var(--tone-slate-fg); }
+
+/* ── Buttons ── */
+.gene-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 15px;
+  border-radius: var(--gene-radius-sm);
+  border: 1px solid var(--gene-line);
+  background: var(--gene-surface);
+  color: var(--gene-ink);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: var(--gene-shadow);
+  transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.gene-btn:hover { background: var(--gene-hover); border-color: #cfd8e3; }
+.gene-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.gene-btn:focus-visible, .gene-nav__link:focus-visible, .gene-card:focus-visible, .gene-kpi:focus-visible,
+.gene-shortcut:focus-visible, .gene-icon-btn:focus-visible, .gene-story__title:focus-visible, .gene-link:focus-visible {
+  outline: none;
+  box-shadow: var(--gene-ring);
+}
+.gene-btn--primary { background: var(--gene-primary); border-color: var(--gene-primary); color: #fff; box-shadow: 0 1px 2px rgba(47, 111, 222, 0.3); }
+.gene-btn--primary:hover { background: var(--gene-primary-ink); border-color: var(--gene-primary-ink); }
+.gene-btn--ghost { background: transparent; box-shadow: none; }
+.gene-btn--danger { color: var(--tone-red-fg); }
+.gene-btn--danger:hover { background: var(--tone-red-bg); border-color: #f4c7c1; }
+.gene-btn--lg { min-height: 42px; padding: 0 18px; font-size: 14.5px; }
+.gene-btn--sm { min-height: 30px; padding: 0 10px; font-size: 12.5px; box-shadow: none; }
+.gene-link { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--gene-primary); text-decoration: none; border-radius: 6px; }
+.gene-link:hover { color: var(--gene-primary-ink); text-decoration: underline; }
+.gene-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--gene-muted);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+.gene-icon-btn:hover { background: var(--gene-surface); border-color: var(--gene-line); color: var(--gene-primary); }
+
+/* Payload's own primary buttons pick up the brand blue. */
+.btn--style-primary { background-color: var(--gene-primary); color: #fff; }
+.btn--style-primary:hover:not(:disabled), .btn--style-primary:focus-visible { background-color: var(--gene-primary-ink); }
+
+/* ── Workflow panel ── */
+.gene-workflow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius);
+  background: var(--gene-surface);
+  box-shadow: var(--gene-shadow);
+}
+.gene-workflow__label { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gene-muted); }
+.gene-workflow .gene-status { align-self: flex-start; }
+.gene-workflow__hint { margin: 0; font-size: 13px; line-height: 1.5; color: var(--gene-ink-2); }
+.gene-workflow__hint--small { font-size: 12px; color: var(--gene-muted); }
+.gene-workflow__note {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--tone-amber-bg);
+  color: #6b4705;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+.gene-workflow__note svg { flex: none; margin-top: 2px; }
+.gene-workflow__actions { display: flex; flex-direction: column; gap: 6px; }
+.gene-workflow__form { display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px solid var(--gene-line); }
+.gene-workflow__form label { font-size: 13px; font-weight: 500; }
+.gene-workflow__form input, .gene-workflow__form textarea, .gene-select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--gene-line);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 14px;
+  background: var(--gene-surface);
+  color: var(--gene-ink);
+}
+
+/* ── Help text ── */
+.gene-help { display: block; margin: 4px 0; font-size: 13px; line-height: 1.5; color: var(--gene-muted); }
+.gene-help svg { display: inline-block; vertical-align: -2px; margin-right: 6px; }
+.gene-help--error { color: var(--tone-red-fg); }
+.gene-help--warn { color: var(--tone-amber-fg); }
+.gene-help--ok { color: var(--tone-green-fg); }
+.gene-spin { animation: gene-spin 1s linear infinite; }
+@keyframes gene-spin { to { transform: rotate(360deg); } }
+.gene-callout { padding: 16px 18px; border: 1px solid var(--gene-line); border-radius: var(--gene-radius); background: var(--gene-surface); font-size: 14px; line-height: 1.55; }
+.gene-callout p { margin: 0 0 10px; }
+.gene-callout__links a { display: inline-flex; gap: 6px; align-items: center; color: var(--gene-primary); font-weight: 600; }
+
+/* ── Video metadata + phone preview ── */
+.gene-video-meta { display: grid; grid-template-columns: minmax(0, 220px) 1fr; gap: 20px; margin: 8px 0 24px; align-items: start; }
+.gene-video-meta__player { width: 100%; max-height: 390px; border-radius: 12px; background: #000; object-fit: contain; }
+.gene-video-meta dl, .gene-facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0 0 10px; font-size: 13px; }
+.gene-video-meta dt, .gene-facts dt { color: var(--gene-muted); }
+.gene-video-meta dd, .gene-facts dd { margin: 0; color: var(--gene-ink); font-weight: 500; }
+.gene-phone-preview { display: flex; gap: 28px; align-items: flex-start; margin: 16px 0 8px; flex-wrap: wrap; }
+.gene-phone-preview__aside { flex: 1; min-width: 220px; max-width: 360px; }
+.gene-phone {
+  position: relative;
+  width: 250px;
+  aspect-ratio: 9 / 16;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #050505;
+  box-shadow: 0 0 0 8px #1a1a1a, 0 16px 40px rgba(0, 0, 0, 0.18);
+  color: #fff;
+}
+.gene-phone__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.gene-phone__empty { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.6); font-size: 12px; text-align: center; padding: 20px; }
+.gene-phone__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 14px 18px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), transparent 22%, transparent 52%, rgba(0, 0, 0, 0.82));
+  pointer-events: none;
+}
+.gene-phone__brand { display: block; height: 22px; width: auto; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.45)); }
+.gene-phone__kicker { margin: 0 0 6px; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); }
+.gene-phone__title { margin: 0; font-family: "Newsreader", Georgia, serif; font-size: 19px; line-height: 1.15; }
+.gene-phone__excerpt { margin: 6px 0 0; font-size: 11px; line-height: 1.4; color: rgba(255, 255, 255, 0.78); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.gene-phone__cta { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; padding: 6px 11px; border-radius: 999px; background: #fff; color: #0e0e0d; font-size: 11px; font-weight: 600; }
+
+/* ── Colour field ── */
+.gene-color-field__row { display: flex; gap: 10px; align-items: center; }
+.gene-color-field__row input[type="color"] { width: 42px; height: 38px; padding: 2px; border: 1px solid var(--gene-line); border-radius: 8px; background: #fff; }
+.gene-color-field__row input[type="text"] { width: 140px; padding: 8px 10px; border: 1px solid var(--gene-line); border-radius: 8px; font: inherit; }
+.gene-color-field__sample { padding: 8px 16px; border-radius: 10px; font-size: 13px; color: var(--gene-ink); }
+
+/* ── Dashboard ── */
+.gene-dashboard, .gene-analytics { padding-top: 30px; padding-bottom: 60px; }
+.gene-dashboard__header { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 26px; flex-wrap: wrap; }
+.gene-dashboard__header h1 { margin: 6px 0 0; font-size: 34px; font-weight: 700; line-height: 1.15; letter-spacing: -0.025em; color: var(--gene-ink); }
+.gene-dashboard__lede { margin: 10px 0 0; max-width: 620px; font-size: 14.5px; line-height: 1.55; color: var(--gene-muted); }
+.gene-dashboard__lede strong { color: var(--gene-ink-2); font-weight: 600; }
+.gene-dashboard__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.gene-kicker { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gene-faint); }
+.gene-muted { color: var(--gene-muted); font-size: 13px; }
+
+.gene-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+.gene-kpi {
+  --kpi-wash: var(--tone-slate-bg);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 20px 16px;
+  overflow: hidden;
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius);
+  background: radial-gradient(120% 90% at 100% 0%, var(--kpi-wash) 0%, transparent 55%), var(--gene-surface);
+  color: var(--gene-ink);
+  text-decoration: none;
+  box-shadow: var(--gene-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.gene-kpi:hover { transform: translateY(-2px); box-shadow: var(--gene-shadow-lg); border-color: #d5dde7; }
+.gene-kpi--green { --kpi-wash: var(--tone-green-bg); }
+.gene-kpi--blue { --kpi-wash: var(--tone-blue-bg); }
+.gene-kpi--amber { --kpi-wash: var(--tone-amber-bg); }
+.gene-kpi--violet { --kpi-wash: var(--tone-violet-bg); }
+.gene-kpi--alert { border-color: #f1d08a; box-shadow: 0 0 0 3px rgba(241, 208, 138, 0.35), var(--gene-shadow); }
+.gene-kpi__top { display: flex; align-items: center; gap: 10px; }
+.gene-kpi__label { flex: 1; min-width: 0; font-size: 13.5px; font-weight: 600; color: var(--gene-ink-2); }
+.gene-kpi__value { font-size: 40px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.gene-kpi__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--gene-line);
+  font-size: 12.5px;
+  color: var(--gene-muted);
+}
+.gene-kpi__foot svg { color: var(--gene-faint); transition: transform 0.15s ease, color 0.15s ease; }
+.gene-kpi:hover .gene-kpi__foot svg { color: var(--gene-primary); transform: translateX(3px); }
+
+/* Generic stat cards (used by Analytics). */
+.gene-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.gene-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius);
+  background: var(--gene-surface);
+  color: var(--gene-ink);
+  text-decoration: none;
+  box-shadow: var(--gene-shadow);
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+a.gene-card:hover { border-color: #cfd8e3; box-shadow: var(--gene-shadow-lg); }
+.gene-card--highlight { border-color: var(--gene-accent); box-shadow: inset 3px 0 0 var(--gene-accent); }
+.gene-card__value { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.gene-card__label { font-size: 13px; font-weight: 500; color: var(--gene-muted); }
+.gene-card__note { font-size: 12px; color: var(--gene-muted); margin-top: 4px; }
+.gene-shortcuts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.gene-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--gene-line);
+  background: var(--gene-surface);
+  color: var(--gene-ink);
+  font-size: 13.5px;
+  text-decoration: none;
+}
+.gene-shortcut:hover { background: var(--gene-hover); }
+
+.gene-dashboard__grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 20px; align-items: start; margin-bottom: 20px; }
+.gene-dashboard__side { display: flex; flex-direction: column; gap: 20px; }
+.gene-panel {
+  padding: 20px 22px;
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius);
+  background: var(--gene-surface);
+  box-shadow: var(--gene-shadow);
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.gene-dashboard__grid .gene-panel, .gene-dashboard__side .gene-panel { margin-bottom: 0; }
+.gene-panel__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 14px; }
+.gene-panel__head h2 { margin: 2px 0 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--gene-ink); }
+.gene-panel__head > a:not(.gene-link) { font-size: 13px; font-weight: 600; color: var(--gene-primary); }
+
+/* Tables */
+.gene-table-wrap { margin: 0 -22px -20px; overflow-x: auto; }
+.gene-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.gene-table th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gene-muted);
+  padding: 10px 12px;
+  background: #f8fafc;
+  border-top: 1px solid var(--gene-line);
+  border-bottom: 1px solid var(--gene-line);
+  white-space: nowrap;
+}
+.gene-table td { padding: 11px 12px; border-bottom: 1px solid var(--gene-line-soft); vertical-align: middle; color: var(--gene-ink-2); }
+.gene-table-wrap .gene-table th:first-child, .gene-table-wrap .gene-table td:first-child { padding-left: 22px; }
+.gene-table-wrap .gene-table th:last-child, .gene-table-wrap .gene-table td:last-child { padding-right: 18px; }
+.gene-table tbody tr { transition: background 0.1s ease; }
+.gene-table tbody tr:hover { background: var(--gene-hover); }
+.gene-table tr:last-child td { border-bottom: 0; }
+.gene-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.gene-table__muted { color: var(--gene-muted) !important; white-space: nowrap; }
+.gene-table__thumb { width: 44px; }
+.gene-table__thumb img { width: 36px; height: 64px; object-fit: cover; border-radius: 6px; display: block; background: #eee; }
+.gene-thumb-empty { width: 36px; height: 64px; border-radius: 6px; background: var(--tone-slate-bg); display: flex; align-items: center; justify-content: center; color: var(--gene-muted); }
+.gene-table__title { min-width: 220px; }
+.gene-table__title a { color: var(--gene-ink); font-weight: 600; text-decoration: none; }
+.gene-table__title a:hover { color: var(--gene-primary); text-decoration: underline; }
+.gene-table__date { white-space: nowrap; color: var(--gene-muted) !important; font-variant-numeric: tabular-nums; font-size: 13px; }
+.gene-table__actions { white-space: nowrap; text-align: right; width: 1%; }
+.gene-table__actions > a { margin-right: 10px; color: var(--gene-primary); font-size: 13px; }
+.gene-icon-actions { display: inline-flex; gap: 2px; opacity: 0.75; transition: opacity 0.12s ease; }
+tr:hover .gene-icon-actions, .gene-icon-actions:focus-within { opacity: 1; }
+
+.gene-story { display: flex; align-items: center; gap: 12px; min-width: 260px; }
+.gene-story__thumb { width: 34px; height: 48px; flex: none; object-fit: cover; border-radius: 7px; background: var(--tone-slate-bg); box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06); }
+.gene-story__thumb--empty { display: inline-flex; align-items: center; justify-content: center; color: var(--gene-muted); }
+.gene-story__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.gene-story__text small { font-size: 12px; color: var(--gene-muted); }
+.gene-story__title, .gene-list__title, .gene-activity__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.gene-story__title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--gene-ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.gene-story__title:hover, .gene-list__title:hover, .gene-activity__link:hover { color: var(--gene-primary); text-decoration: underline; }
+
+/* Side lists */
+.gene-library { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.gene-library li { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--gene-line-soft); }
+.gene-library li:last-child { border-bottom: 0; }
+.gene-library__text { display: flex; flex-direction: column; flex: 1; min-width: 0; color: var(--gene-ink); text-decoration: none; line-height: 1.2; }
+.gene-library__text strong { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.gene-library__text small { font-size: 12.5px; color: var(--gene-muted); }
+.gene-library__text:hover small { color: var(--gene-primary); }
+
+.gene-list, .gene-activity { list-style: none; margin: 0; padding: 0; }
+.gene-list li { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--gene-line-soft); font-size: 13.5px; }
+.gene-list li > svg { flex: none; margin-top: 2px; color: var(--gene-primary); }
+.gene-list li p { margin: 3px 0 0; color: var(--gene-muted); font-size: 12.5px; }
+.gene-list a, .gene-activity a { color: var(--gene-ink); font-weight: 600; }
+.gene-list__title { font-size: 13.5px; font-weight: 600; color: var(--gene-ink); line-height: 1.35; }
+
+.gene-activity { position: relative; }
+.gene-activity__item, .gene-activity li { position: relative; padding: 0 0 14px 22px; font-size: 13px; line-height: 1.45; color: var(--gene-ink-2); }
+.gene-activity li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--dot, var(--gene-faint));
+  box-shadow: 0 0 0 3px var(--dot-ring, var(--tone-slate-bg));
+}
+.gene-activity li::after { content: ""; position: absolute; left: 7px; top: 18px; bottom: 0; width: 1px; background: var(--gene-line); }
+.gene-activity li:last-child { padding-bottom: 0; }
+.gene-activity li:last-child::after { display: none; }
+.gene-activity__item--green { --dot: #5f9e2f; --dot-ring: var(--tone-green-bg); }
+.gene-activity__item--blue { --dot: var(--gene-primary); --dot-ring: var(--tone-blue-bg); }
+.gene-activity__item--amber { --dot: #d99413; --dot-ring: var(--tone-amber-bg); }
+.gene-activity__item--violet { --dot: #7c4ddf; --dot-ring: var(--tone-violet-bg); }
+.gene-activity__item--red { --dot: #d9483b; --dot-ring: var(--tone-red-bg); }
+.gene-activity p { margin: 0; }
+.gene-activity strong { color: var(--gene-ink); font-weight: 600; }
+.gene-activity__link { font-weight: 600; color: var(--gene-primary); }
+.gene-activity__entity { font-weight: 600; color: var(--gene-ink-2); }
+.gene-activity time { display: block; margin-top: 2px; font-size: 12px; color: var(--gene-faint); font-variant-numeric: tabular-nums; }
+
+.gene-empty { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 0; color: var(--gene-muted); font-size: 14px; }
+.gene-empty--center { align-items: center; padding: 18px 0 10px; text-align: center; }
+.gene-empty p { margin: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+
+/* ── Analytics ── */
+.gene-segmented { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--tone-slate-bg); }
+.gene-segmented a { padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 500; color: var(--gene-ink-2); text-decoration: none; }
+.gene-segmented a[aria-current="page"] { background: var(--gene-surface); color: var(--gene-primary-ink); font-weight: 600; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1); }
+.gene-setup { max-width: 720px; }
+.gene-setup h2 { margin: 8px 0; font-size: 18px; }
+.gene-setup p, .gene-setup li { font-size: 14px; line-height: 1.6; color: var(--gene-ink-2); }
+.gene-bars { position: relative; }
+.gene-bars__plot { display: flex; align-items: flex-end; gap: 2px; height: 160px; border-bottom: 1px solid var(--gene-line); }
+.gene-bars__col { position: relative; flex: 1; height: 100%; display: flex; align-items: flex-end; outline: none; }
+.gene-bars__bar { display: block; width: 100%; min-height: 1px; border-radius: 4px 4px 0 0; background: #9dbcf0; }
+.gene-bars__col:hover .gene-bars__bar, .gene-bars__col:focus-visible .gene-bars__bar { background: var(--gene-primary); }
+.gene-bars__col:hover::after, .gene-bars__col:focus-visible::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: var(--gene-ink);
+  color: #fff;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 2;
+  pointer-events: none;
+}
+.gene-bars__axis { display: flex; gap: 2px; margin-top: 6px; }
+.gene-bars__axis span { flex: 1; font-size: 11px; color: var(--gene-muted); white-space: nowrap; overflow: visible; }
+.gene-bars__peak { margin: 8px 0 0; font-size: 12px; color: var(--gene-muted); }
+.gene-table-toggle { margin-top: 12px; font-size: 13px; }
+.gene-table-toggle summary { cursor: pointer; color: var(--gene-muted); }
+.gene-ranked { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.gene-ranked__row { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 4px; }
+.gene-ranked__row .num { font-variant-numeric: tabular-nums; color: var(--gene-ink-2); }
+.gene-ranked__track { display: block; height: 6px; border-radius: 999px; background: var(--tone-slate-bg); overflow: hidden; }
+.gene-ranked__track span { display: block; height: 100%; border-radius: 999px; background: var(--gene-primary); }
+
+/* ── Upload tray ── */
+.gene-upload-tray {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+  width: min(360px, calc(100vw - 40px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gene-upload-tray__item { padding: 12px 14px; border-radius: 12px; background: var(--gene-ink); color: #fff; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); font-size: 13px; }
+.gene-upload-tray__row { display: flex; justify-content: space-between; gap: 12px; }
+.gene-upload-tray__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gene-upload-tray__pct { font-variant-numeric: tabular-nums; color: rgba(255, 255, 255, 0.8); }
+.gene-upload-tray__pct button { background: none; border: 0; color: #fff; text-decoration: underline; cursor: pointer; font: inherit; }
+.gene-upload-tray__bar { height: 4px; margin-top: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.18); overflow: hidden; }
+.gene-upload-tray__bar span { display: block; height: 100%; background: var(--gene-primary); transition: width 0.2s ease; }
+.gene-upload-tray__item[data-state="done"] .gene-upload-tray__bar span { background: #6fbf4a; }
+.gene-upload-tray__meta { margin: 6px 0 0; font-size: 11.5px; color: rgba(255, 255, 255, 0.6); }
+.gene-upload-tray__error { margin: 6px 0 0; color: #ffb4a0; }
+
+/* ── Payload screens: list views, forms and drawers ── */
+.collection-list .list-header h1, .doc-header__title { font-weight: 700; letter-spacing: -0.02em; color: var(--gene-ink); }
+.table {
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius);
+  background: var(--gene-surface);
+  box-shadow: var(--gene-shadow);
+  overflow: hidden;
+}
+.table table { font-size: 13.5px; }
+.table thead th, .table thead td {
+  background: #f8fafc;
+  border-bottom: 1px solid var(--gene-line);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gene-muted);
+}
+.table tbody tr { transition: background 0.1s ease; }
+.table tbody tr:nth-child(odd) { background: var(--gene-surface); }
+.table tbody tr:hover { background: var(--gene-hover); }
+.table tbody td { border-bottom: 1px solid var(--gene-line-soft); color: var(--gene-ink-2); }
+.table tbody tr:last-child td { border-bottom: 0; }
+.table tbody td a { color: var(--gene-ink); font-weight: 600; }
+.table tbody td a:hover { color: var(--gene-primary); }
+
+.list-controls__wrap, .search-filter { border-radius: var(--gene-radius-sm); }
+.search-filter__input { font-size: 14px; }
+
+.field-type input:not([type="checkbox"]):not([type="radio"]), .field-type textarea, .react-select .rs__control {
+  border-color: var(--gene-line) !important;
+  box-shadow: none;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.field-type input:not([type="checkbox"]):not([type="radio"]):focus, .field-type textarea:focus, .react-select .rs__control--is-focused {
+  border-color: var(--gene-primary) !important;
+  box-shadow: var(--gene-ring) !important;
+}
+.field-label { font-weight: 600; color: var(--gene-ink-2); }
+
+/* Drawers slide over from the right like a panel rather than covering the whole screen. */
+.drawer__blur-bg { background: rgba(15, 23, 42, 0.38) !important; backdrop-filter: blur(2px); }
+.drawer__content { box-shadow: -24px 0 60px -20px rgba(15, 23, 42, 0.35); border-left: 1px solid var(--gene-line); }
+.drawer__header { border-bottom: 1px solid var(--gene-line); }
+.drawer__header__title { font-weight: 700; letter-spacing: -0.01em; }
+
+@media (max-width: 1280px) {
+  .gene-dashboard__grid { grid-template-columns: 1fr; }
+  .gene-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
+  .gene-video-meta { grid-template-columns: 1fr; }
+  .gene-dashboard__header h1 { font-size: 27px; }
+  .gene-kpis { grid-template-columns: 1fr; }
+  .gene-kpi__value { font-size: 34px; }
+  .gene-dashboard__actions { width: 100%; }
+  .gene-dashboard__actions .gene-btn { flex: 1; }
+}
+
+/* Stories list: thumbnail + headline cell. */
+.gene-cell-story {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 260px;
+  max-width: 460px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: var(--gene-ink) !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+.gene-cell-story__title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+a.gene-cell-story:hover .gene-cell-story__title, button.gene-cell-story:hover .gene-cell-story__title { color: var(--gene-primary); text-decoration: underline; }
+
+/* ── List page header: title + actions on every collection ── */
+.list-header__title-and-actions { align-items: center; gap: 14px; }
+.list-header__title { font-weight: 700; letter-spacing: -0.025em; color: var(--gene-ink); }
+.list-header__title-actions { display: inline-flex; align-items: center; gap: 8px; }
+.list-header__title-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  margin: 0;
+  padding: 0 14px 0 12px;
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius-sm);
+  background: var(--gene-surface);
+  color: var(--gene-ink);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--gene-shadow);
+  transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.list-header__title-actions .btn:hover { background: var(--gene-hover); border-color: #cfd8e3; }
+.list-header__title-actions .btn:focus-visible { outline: none; box-shadow: var(--gene-ring); }
+.list-header__title-actions .btn .btn__content { display: inline-flex; align-items: center; gap: 7px; }
+.list-header__title-actions .btn .btn__label { font: inherit; }
+.list-header__title-actions .btn .btn__content::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: var(--btn-icon) center / contain no-repeat;
+  mask: var(--btn-icon) center / contain no-repeat;
+}
+/* Primary action: Create New (lucide "plus"). */
+.list-header__title-actions .list-create-new-doc__create-new-button {
+  --btn-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
+  background: var(--gene-primary);
+  border-color: var(--gene-primary);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(47, 111, 222, 0.3);
+}
+.list-header__title-actions .list-create-new-doc__create-new-button:hover { background: var(--gene-primary-ink); border-color: var(--gene-primary-ink); color: #fff; }
+/* Secondary action: Bulk Upload (lucide "upload"). */
+.list-header__title-actions .btn[aria-label="Bulk Upload"] {
+  --btn-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12'/%3E%3C/svg%3E");
+}
+/* Any other header button keeps the look without an icon. */
+.list-header__title-actions .btn:not(.list-create-new-doc__create-new-button):not([aria-label="Bulk Upload"]) .btn__content::before { display: none; }
+
+/* "All / Trash" view switcher on the right of the list header. */
+.list-header__actions a, .list-header__actions .btn { border-radius: var(--gene-radius-sm); font-weight: 600; }
+
+/* Breadcrumb home: a tidy framed mark instead of a loose image. */
+.step-nav__home { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 9px; transition: background 0.12s ease; }
+.step-nav__home:hover { background: var(--gene-hover); }
+.step-nav__home .gene-nav-icon { width: 22px; height: 22px; }
+
+/* Payload tables: centre every cell vertically so rows with thumbnails line up. */
+.table td { vertical-align: middle; }
+
+/* ── Page rhythm: breathing room under the sticky top bar on list pages ── */
+.collection-list__wrap { padding-top: 32px; }
+.list-header { margin-bottom: 18px; }
+.list-header__title { margin: 0; line-height: 1.15; }
+.list-header__after-header-content { margin-top: 8px; }
+.collection-list__sub-header, .custom-view-description { font-size: 14px; line-height: 1.5; color: var(--gene-muted); }
+.list-controls { margin-bottom: 20px; }
+.collection-list__no-results { padding: 40px 0; }
+
+/* Same breathing room on full-page edit views (collections and globals); drawers keep their own header spacing. */
+.template-default__wrap > .doc-header { margin-top: 0; padding-top: 32px; }
+.template-default__wrap > .doc-header .doc-header__title { line-height: 1.15; letter-spacing: -0.025em; }
+
+/* ── Sidebar layout: brand pinned top, menu scrolls, user card pinned bottom ── */
+.nav__scroll { display: flex; flex-direction: column; overflow: hidden; padding-bottom: 0; }
+.nav__wrap.gene-nav { flex: 1; min-height: 0; height: auto; width: 100%; padding-top: 4px; }
+.gene-nav__brand { flex: none; }
+.gene-nav__sections {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0 -8px;
+  padding: 0 8px 16px;
+  scrollbar-width: thin;
+  scrollbar-color: #d5dde7 transparent;
+}
+/* Keep the active marker visible inside the scroll area. */
+.gene-nav__link[aria-current="page"]::before { left: -8px; }
+.nav__controls.gene-nav__user {
+  flex: none;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  align-self: stretch;
+  width: auto !important;
+  gap: 10px;
+  margin: 0 -20px;
+  padding: 14px 20px 16px !important;
+  border-top: 1px solid var(--gene-line);
+  background: var(--gene-surface);
+}
+.gene-nav__user .nav__log-out {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  margin: 0 0 0 auto;
+  border-radius: 8px;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.gene-nav__user .nav__log-out:hover { background: var(--tone-red-bg); }
+.gene-nav__user-text { text-align: left; }
+
+/* ── Sticky save bar on edit pages: solid background so content doesn't show through ── */
+.doc-controls {
+  background: rgba(242, 245, 249, 0.94);
+  backdrop-filter: saturate(180%) blur(10px);
+  border-bottom: 1px solid var(--gene-line);
+}
+.drawer .doc-controls { background: rgba(255, 255, 255, 0.96); }
+
+/* ── Edit forms: consistent rhythm between fields and array rows ── */
+.render-fields > .field-type { margin-bottom: 24px; }
+.array-field__header, .blocks-field__header { margin-bottom: 12px; }
+.array-field__header-heading, .blocks-field__header-heading { font-size: 20px; font-weight: 700; letter-spacing: -0.015em; }
+.collapsible { border-radius: var(--gene-radius-sm); border-color: var(--gene-line); }
+.collapsible__toggle-wrap { border-radius: var(--gene-radius-sm); }
+.array-field__add-row, .blocks-field__drawer-toggler { font-weight: 600; color: var(--gene-primary); }
+/* Payload spaces the first item in .nav__controls with a top margin; the user card is a single row. */
+.gene-nav__user > * { margin-top: 0 !important; margin-bottom: 0 !important; }
+
+/* ── Sidebar width: items fill the sidebar with even gutters; scrollbar sits on the edge ── */
+.nav__scroll { padding-left: 0 !important; padding-right: 0 !important; }
+.nav__wrap.gene-nav { align-items: stretch; width: 100%; }
+.gene-nav__brand { align-self: flex-start; margin: 0 14px 22px; }
+.gene-nav__sections { margin: 0; padding: 0 14px 16px; }
+.gene-nav__heading { padding: 0 12px; }
+.gene-nav__link { width: 100%; }
+.gene-nav__link[aria-current="page"]::before { left: -14px; }
+.nav__controls.gene-nav__user { margin: 0; padding: 14px 20px 16px !important; }
+
+/* ── Edit pages: shared polish for every collection and global ── */
+/* Read-only values (video metadata, slugs…) stay legible instead of grey-on-grey. */
+.field-type input:read-only:not([type="checkbox"]):not([type="radio"]),
+.field-type textarea:read-only,
+.read-only .rs__control {
+  background: #f8fafc !important;
+  border-color: var(--gene-line) !important;
+  color: var(--gene-ink-2) !important;
+  -webkit-text-fill-color: var(--gene-ink-2);
+  opacity: 1;
+}
+/* Sidebar column: same rhythm as the main column. */
+.document-fields__sidebar-fields .field-type { margin-bottom: 20px; }
+.document-fields__sidebar-wrap, .document-fields__sidebar { border-color: var(--gene-line); }
+/* Secondary and pill buttons inside forms match the admin's buttons. */
+.document-fields .btn--style-secondary,
+.document-fields .btn--style-pill,
+.auth-fields .btn {
+  min-height: 34px;
+  margin: 0;
+  padding: 0 14px;
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius-sm);
+  background: var(--gene-surface);
+  color: var(--gene-ink);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--gene-shadow);
+}
+.document-fields .btn--style-secondary:hover,
+.document-fields .btn--style-pill:hover,
+.auth-fields .btn:hover { background: var(--gene-hover); border-color: #cfd8e3; }
+/* Email / password block on user pages: a proper card. */
+.auth-fields {
+  padding: 24px !important;
+  margin-bottom: 28px;
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius);
+  background: var(--gene-surface) !important;
+  box-shadow: var(--gene-shadow);
+}
+.auth-fields__controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+/* Account page "Payload Settings" block. */
+.payload-settings { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--gene-line); }
+.payload-settings h3 { margin: 0 0 16px; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+
+/* ── Dashboard: fit on one screen ── */
+.gene-dashboard { padding-top: 22px; padding-bottom: 24px; }
+.gene-dashboard__header { margin-bottom: 18px; }
+.gene-dashboard__header h1 { margin-top: 4px; font-size: 30px; }
+.gene-dashboard__lede { margin-top: 6px; }
+.gene-kpis { gap: 14px; margin-bottom: 18px; }
+.gene-kpi { gap: 10px; padding: 16px 18px 12px; }
+.gene-kpi__value { font-size: 34px; }
+.gene-kpi__foot { padding-top: 10px; }
+
+/* Main and side columns share one height; the side column's tabbed list fills what's left. */
+.gene-dashboard__grid { align-items: stretch; margin-bottom: 0; }
+.gene-dashboard__side { gap: 14px; min-height: 0; }
+.gene-dashboard__grid > .gene-panel { display: flex; flex-direction: column; }
+
+/* Recent stories: one-line titles keep every row the same compact height. */
+.gene-dashboard .gene-story__title { -webkit-line-clamp: 1; }
+.gene-dashboard .gene-table td { padding-top: 9px; padding-bottom: 9px; }
+.gene-dashboard .gene-story__thumb { width: 30px; height: 42px; }
+
+/* Library: three compact tiles in one row. */
+.gene-library-panel { padding: 12px; }
+.gene-library { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.gene-library li {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 1px solid var(--gene-line-soft);
+  border-radius: var(--gene-radius-sm);
+  background: #fbfcfe;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+.gene-library li:hover { border-color: var(--gene-line); background: var(--gene-surface); }
+.gene-library li:last-child { border-bottom: 1px solid var(--gene-line-soft); }
+.gene-library__text { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px; }
+.gene-library__text strong { font-size: 20px; line-height: 1; }
+.gene-library__text small { font-size: 12px; }
+.gene-library__add { position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; }
+
+/* Tabbed panel: Recent activity / Upcoming. */
+.gene-tabs { flex: 1; min-height: 260px; display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+.gene-tabs__bar { display: flex; gap: 4px; padding: 10px 12px 0; border-bottom: 1px solid var(--gene-line); }
+.gene-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: -1px;
+  padding: 8px 10px 10px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--gene-muted);
+  cursor: pointer;
+}
+.gene-tabs__tab:hover { color: var(--gene-ink); }
+.gene-tabs__tab[aria-selected="true"] { color: var(--gene-primary-ink); border-bottom-color: var(--gene-primary); }
+.gene-tabs__tab:focus-visible { outline: none; box-shadow: var(--gene-ring); border-radius: 6px; }
+.gene-tabs__count { min-width: 18px; padding: 0 6px; border-radius: 999px; background: var(--tone-blue-bg); color: var(--tone-blue-fg); font-size: 11px; line-height: 18px; text-align: center; }
+.gene-tabs__body { flex: 1; min-height: 0; overflow-y: auto; padding: 16px 18px; scrollbar-width: thin; scrollbar-color: #d5dde7 transparent; }
+.gene-tabs__footer { padding: 10px 18px; border-top: 1px solid var(--gene-line-soft); }
+
+@media (max-width: 1280px) {
+  .gene-tabs { max-height: 420px; }
+}
+/* The list never sizes the row: it takes whatever height the stories panel sets, then scrolls. */
+.gene-tabs__body { flex: 1 1 0; height: 0; }
+@media (max-width: 1280px) { .gene-tabs__body { height: auto; } }
+
+/* ── Page block picker ("Add Layout" drawer): grouped, compact cards with schematic thumbnails ── */
+.blocks-drawer__block-groups { display: flex; flex-direction: column; gap: 28px; }
+.blocks-drawer__block-group-label {
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gene-muted);
+}
+.blocks-drawer__blocks { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.blocks-drawer__blocks > li, .blocks-drawer__blocks > * { width: auto !important; margin: 0 !important; }
+.blocks-drawer .thumbnail-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 10px;
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius);
+  background: var(--gene-surface);
+  box-shadow: var(--gene-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.blocks-drawer .thumbnail-card--has-on-click:hover { transform: translateY(-2px); border-color: #b9cdf3; box-shadow: var(--gene-shadow-lg); }
+.blocks-drawer .thumbnail-card--has-on-click:focus-visible { outline: none; box-shadow: var(--gene-ring); }
+.blocks-drawer .thumbnail-card__thumbnail { aspect-ratio: 3 / 2; border-radius: 9px; overflow: hidden; background: #f4f7fb; }
+.blocks-drawer .thumbnail-card__thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.blocks-drawer .thumbnail-card__label { padding: 10px 4px 2px; font-size: 13.5px; font-weight: 600; color: var(--gene-ink); }
+
+/* ── Contact form block: "Email · required" row labels ── */
+.gene-row-label { display: inline-flex; align-items: baseline; gap: 8px; }
+.gene-row-label strong { font-weight: 600; color: var(--gene-ink); }
+.gene-row-label small { font-size: 12px; color: var(--gene-muted); }
+
+/* ── Form submission: answers as a readable card ── */
+.gene-submission {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 0 0 24px;
+  border: 1px solid var(--gene-line);
+  border-radius: var(--gene-radius);
+  background: var(--gene-surface);
+  box-shadow: var(--gene-shadow);
+  overflow: hidden;
+}
+.gene-submission__row { padding: 14px 18px; border-bottom: 1px solid var(--gene-line-soft); }
+.gene-submission__row--long { grid-column: 1 / -1; }
+.gene-submission dt { margin: 0 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gene-muted); }
+.gene-submission dd { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--gene-ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+.gene-submission dd a { color: var(--gene-primary); font-weight: 600; }
+
+/* ── Admin tour ── */
+.gene-tour { position: fixed; inset: 0; z-index: 10000; }
+.gene-tour__backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(2px); animation: gene-tour-fade 0.2s ease; }
+.gene-tour__spotlight {
+  position: fixed;
+  border-radius: 14px;
+  box-shadow: 0 0 0 4px rgba(47, 111, 222, 0.55), 0 0 0 9999px rgba(15, 23, 42, 0.55);
+  pointer-events: none;
+  transition: top 0.25s ease, left 0.25s ease, width 0.25s ease, height 0.25s ease;
+}
+.gene-tour__card {
+  position: fixed;
+  width: min(360px, calc(100vw - 32px));
+  padding: 22px 22px 18px;
+  border-radius: 16px;
+  background: var(--gene-surface);
+  color: var(--gene-ink);
+  box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.45);
+  outline: none;
+  animation: gene-tour-rise 0.22s ease;
+}
+.gene-tour__card--modal { top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(460px, calc(100vw - 32px)); max-height: calc(100vh - 48px); overflow-y: auto; animation: gene-tour-fade 0.22s ease; }
+.gene-tour__card--wide { width: min(760px, calc(100vw - 32px)); padding: 28px; }
+.gene-tour__card h2 { margin: 0 32px 8px 0; font-size: 18px; font-weight: 700; letter-spacing: -0.015em; }
+.gene-tour__card--wide h2 { font-size: 24px; }
+.gene-tour__card p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--gene-ink-2); }
+.gene-tour__lede { margin-bottom: 20px !important; max-width: 560px; }
+.gene-tour__icon { margin-bottom: 14px; }
+.gene-tour__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--gene-muted);
+  cursor: pointer;
+}
+.gene-tour__close:hover { background: var(--gene-hover); color: var(--gene-ink); }
+.gene-tour__features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 0 6px; padding: 0; list-style: none; }
+.gene-tour__features li { display: flex; gap: 10px; padding: 12px 14px; border: 1px solid var(--gene-line-soft); border-radius: 12px; background: #fbfcfe; font-size: 13px; line-height: 1.5; color: var(--gene-ink-2); }
+.gene-tour__features li svg { flex: none; margin-top: 2px; color: var(--gene-primary); }
+.gene-tour__features strong { display: block; margin-bottom: 2px; font-size: 13.5px; color: var(--gene-ink); }
+.gene-tour__tips { margin: 6px 0 0; padding-left: 18px; font-size: 14px; line-height: 1.7; color: var(--gene-ink-2); }
+.gene-tour__footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; }
+.gene-tour__progress { display: inline-flex; flex-wrap: wrap; gap: 5px; }
+.gene-tour__progress span { width: 6px; height: 6px; border-radius: 999px; background: var(--gene-line); transition: width 0.2s ease, background 0.2s ease; }
+.gene-tour__progress .is-done { background: #9dbcf0; }
+.gene-tour__progress .is-active { width: 18px; background: var(--gene-primary); }
+.gene-tour__actions { display: inline-flex; gap: 8px; }
+.gene-tour__actions .gene-btn { min-height: 34px; }
+@keyframes gene-tour-fade { from { opacity: 0; } }
+@keyframes gene-tour-rise { from { opacity: 0; transform: translateY(6px); } }
+@media (max-width: 640px) { .gene-tour__features { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .gene-tour__spotlight, .gene-tour__card, .gene-tour__backdrop { transition: none; animation: none; } }

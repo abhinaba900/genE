@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+*.tsbuildinfo
+next-env.d.ts
+.env*.local
+public/media/video/_tmp
+.media-cache
+/media
+/videos
+/.pgdata
